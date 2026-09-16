@@ -34,21 +34,28 @@ const SCHEMA = `
   CREATE TABLE IF NOT EXISTS values_list (
     id TEXT PRIMARY KEY,
     label TEXT,
+    labelAr TEXT,
     description TEXT,
+    descriptionAr TEXT,
     position INTEGER
   );
   CREATE TABLE IF NOT EXISTS practice_areas (
     id TEXT PRIMARY KEY,
     icon TEXT,
     title TEXT,
+    titleAr TEXT,
     description TEXT,
+    descriptionAr TEXT,
     position INTEGER
   );
   CREATE TABLE IF NOT EXISTS experiences (
     id TEXT PRIMARY KEY,
     title TEXT,
+    titleAr TEXT,
     org TEXT,
+    orgAr TEXT,
     detail TEXT,
+    detailAr TEXT,
     position INTEGER
   );
   CREATE TABLE IF NOT EXISTS gallery (
@@ -95,12 +102,18 @@ const SCHEMA = `
 `;
 
 const SCALAR_KEYS: (keyof SiteContent)[] = [
-  'brandName', 'brandTagline', 'heroFirstName', 'heroLastName', 'heroSubtitle',
-  'heroPortrait', 'ctaPrimary', 'ctaSecondary', 'phone', 'email', 'addressLine1',
-  'addressLine2', 'linkedinUrl', 'linkedinLabel', 'aboutEyebrow', 'aboutTitleLine1',
-  'aboutTitleLine2', 'aboutLead', 'aboutHighlight', 'aboutParagraph1', 'aboutParagraph2',
-  'aboutPhoto', 'aboutQuote', 'practiceIntro', 'experienceIntro', 'internationalIntro',
-  'publicationsIntro', 'contactIntro', 'footerTagline',
+  'brandName', 'brandNameAr', 'brandTagline', 'brandTaglineAr', 'heroFirstName', 'heroFirstNameAr',
+  'heroLastName', 'heroLastNameAr', 'heroSubtitle', 'heroSubtitleAr', 'heroPortrait',
+  'ctaPrimary', 'ctaPrimaryAr', 'ctaSecondary', 'ctaSecondaryAr',
+  'phone', 'email', 'addressLine1', 'addressLine1Ar', 'addressLine2', 'addressLine2Ar',
+  'linkedinUrl', 'linkedinLabel', 'linkedinLabelAr',
+  'aboutEyebrow', 'aboutEyebrowAr', 'aboutTitleLine1', 'aboutTitleLine1Ar',
+  'aboutTitleLine2', 'aboutTitleLine2Ar', 'aboutLead', 'aboutLeadAr',
+  'aboutHighlight', 'aboutHighlightAr', 'aboutParagraph1', 'aboutParagraph1Ar',
+  'aboutParagraph2', 'aboutParagraph2Ar', 'aboutPhoto', 'aboutQuote', 'aboutQuoteAr',
+  'practiceIntro', 'practiceIntroAr', 'experienceIntro', 'experienceIntroAr',
+  'internationalIntro', 'internationalIntroAr', 'publicationsIntro', 'publicationsIntroAr',
+  'contactIntro', 'contactIntroAr', 'footerTagline', 'footerTaglineAr',
 ];
 
 const DEFAULT_PASSWORD = 'Ajmi2025!';
@@ -128,17 +141,17 @@ function writeContent(db: Database, content: SiteContent) {
 
     db.run('DELETE FROM values_list;');
     content.values.forEach((v, i) => {
-      db.run('INSERT INTO values_list (id, label, description, position) VALUES (?, ?, ?, ?);', [v.id, v.label, v.desc, i]);
+      db.run('INSERT INTO values_list (id, label, labelAr, description, descriptionAr, position) VALUES (?, ?, ?, ?, ?, ?);', [v.id, v.label, v.labelAr ?? '', v.desc, v.descAr ?? '', i]', [v.id, v.label, v.desc, i]);
     });
 
     db.run('DELETE FROM practice_areas;');
     content.practiceAreas.forEach((p, i) => {
-      db.run('INSERT INTO practice_areas (id, icon, title, description, position) VALUES (?, ?, ?, ?, ?);', [p.id, p.icon, p.title, p.description, i]);
+      db.run('INSERT INTO practice_areas (id, icon, title, titleAr, description, descriptionAr, position) VALUES (?, ?, ?, ?, ?, ?, ?);', [p.id, p.icon, p.title, p.titleAr ?? '', p.description, p.descriptionAr ?? '', i]', [p.id, p.icon, p.title, p.description, i]);
     });
 
     db.run('DELETE FROM experiences;');
     content.experiences.forEach((e, i) => {
-      db.run('INSERT INTO experiences (id, title, org, detail, position) VALUES (?, ?, ?, ?, ?);', [e.id, e.title, e.org, e.detail, i]);
+      db.run('INSERT INTO experiences (id, title, titleAr, org, orgAr, detail, detailAr, position) VALUES (?, ?, ?, ?, ?, ?, ?, ?);', [e.id, e.title, e.titleAr ?? '', e.org, e.orgAr ?? '', e.detail, e.detailAr ?? '', i]', [e.id, e.title, e.org, e.detail, i]);
     });
 
     db.run('DELETE FROM gallery;');
@@ -188,15 +201,15 @@ function readContent(db: Database): SiteContent {
     }
   }
 
-  const values = queryRows(db, 'SELECT id, label, description FROM values_list ORDER BY position;').map((r) => ({
+  const values = queryRows(db, 'SELECT id, label, labelAr, description, descriptionAr FROM values_list ORDER BY position;').map((r) => ({
     id: String(r.id), label: String(r.label ?? ''), desc: String(r.description ?? ''),
   }));
 
-  const practiceAreas = queryRows(db, 'SELECT id, icon, title, description FROM practice_areas ORDER BY position;').map((r) => ({
+  const practiceAreas = queryRows(db, 'SELECT id, icon, title, titleAr, description, descriptionAr FROM practice_areas ORDER BY position;').map((r) => ({
     id: String(r.id), icon: String(r.icon ?? 'Scale'), title: String(r.title ?? ''), description: String(r.description ?? ''),
   }));
 
-  const experiences = queryRows(db, 'SELECT id, title, org, detail FROM experiences ORDER BY position;').map((r) => ({
+  const experiences = queryRows(db, 'SELECT id, title, titleAr, org, orgAr, detail, detailAr FROM experiences ORDER BY position;').map((r) => ({
     id: String(r.id), title: String(r.title ?? ''), org: String(r.org ?? ''), detail: String(r.detail ?? ''),
   }));
 

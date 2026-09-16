@@ -1,16 +1,26 @@
 import { useEffect, useState } from 'react';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { ArrowUpRight, Menu, X, Globe } from 'lucide-react';
 import { useContent } from '../lib/content';
 import { getIcon } from '../lib/icons';
 
-export const PAGES = [
-  { label: 'Accueil', path: '#/' },
-  { label: 'Cabinet', path: '#/cabinet' },
-  { label: 'Expertises', path: '#/expertises' },
-  { label: 'Parcours', path: '#/parcours' },
-  { label: 'Publications', path: '#/publications' },
-  { label: 'Contact', path: '#/contact' },
-];
+const PAGES = {
+  fr: [
+    { label: 'Accueil', path: '#/' },
+    { label: 'Cabinet', path: '#/cabinet' },
+    { label: 'Expertises', path: '#/expertises' },
+    { label: 'Parcours', path: '#/parcours' },
+    { label: 'Publications', path: '#/publications' },
+    { label: 'Contact', path: '#/contact' },
+  ],
+  ar: [
+    { label: 'الرئيسية', path: '#/' },
+    { label: 'المكتب', path: '#/cabinet' },
+    { label: 'الخبرات', path: '#/expertises' },
+    { label: 'المسار', path: '#/parcours' },
+    { label: 'المنشورات', path: '#/publications' },
+    { label: 'اتصل بنا', path: '#/contact' },
+  ],
+};
 
 function normalize(hash: string): string {
   const clean = hash.split('?')[0].split('#')[1] || '';
@@ -19,7 +29,7 @@ function normalize(hash: string): string {
 }
 
 export default function Nav({ currentHash }: { currentHash: string }) {
-  const { content } = useContent();
+  const { content, lang, setLang } = useContent();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -32,6 +42,8 @@ export default function Nav({ currentHash }: { currentHash: string }) {
 
   const current = normalize(currentHash);
   const IconIdentity = getIcon('Scale');
+  
+  const pages = PAGES[lang];
 
   return (
     <>
@@ -52,16 +64,16 @@ export default function Nav({ currentHash }: { currentHash: string }) {
             </div>
             <div className="leading-tight">
               <div className="font-serif text-lg font-semibold tracking-tight text-ink">
-                {content.brandName}
+                {lang === 'ar' && content.brandNameAr ? content.brandNameAr : content.brandName}
               </div>
               <div className="text-[10px] uppercase tracking-[0.2em] text-ink/60">
-                {content.brandTagline}
+                {lang === 'ar' && content.brandTaglineAr ? content.brandTaglineAr : content.brandTagline}
               </div>
             </div>
           </a>
 
           <nav className="hidden md:flex items-center gap-9">
-            {PAGES.map((p) => {
+            {pages.map((p) => {
               const active = current === p.path;
               return (
                 <a
@@ -77,28 +89,45 @@ export default function Nav({ currentHash }: { currentHash: string }) {
             })}
           </nav>
 
-          <a
-            href="#/contact"
-            className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-ink text-paper text-sm font-medium hover:bg-gold transition-all duration-300 group"
-          >
-            Consultation
-            <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </a>
+          <div className="hidden md:flex items-center gap-4">
+            <button
+              onClick={() => setLang(lang === 'fr' ? 'ar' : 'fr')}
+              className="flex items-center gap-1.5 text-xs uppercase tracking-widest font-semibold text-ink/60 hover:text-gold transition-colors"
+            >
+              <Globe size={14} />
+              {lang === 'fr' ? 'AR' : 'FR'}
+            </button>
+            <a
+              href="#/contact"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-ink text-paper text-sm font-medium hover:bg-gold transition-all duration-300 group"
+            >
+              {lang === 'ar' ? 'استشارة' : 'Consultation'}
+              <ArrowUpRight size={16} className={`transition-transform ${lang === 'ar' ? 'group-hover:-translate-x-0.5' : 'group-hover:translate-x-0.5'} group-hover:-translate-y-0.5`} />
+            </a>
+          </div>
 
-          <button
-            onClick={() => setOpen(!open)}
-            className="md:hidden text-ink"
-            aria-label="Menu"
-          >
-            {open ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="md:hidden flex items-center gap-4">
+            <button
+              onClick={() => setLang(lang === 'fr' ? 'ar' : 'fr')}
+              className="flex items-center gap-1 text-xs font-semibold text-ink/80"
+            >
+              {lang === 'fr' ? 'AR' : 'FR'}
+            </button>
+            <button
+              onClick={() => setOpen(!open)}
+              className="text-ink"
+              aria-label="Menu"
+            >
+              {open ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </header>
 
       {open && (
         <div className="fixed inset-0 z-40 bg-paper md:hidden pt-24 px-6">
           <nav className="flex flex-col gap-6">
-            {PAGES.map((p) => (
+            {pages.map((p) => (
               <a
                 key={p.path}
                 href={p.path}
@@ -115,7 +144,7 @@ export default function Nav({ currentHash }: { currentHash: string }) {
               onClick={() => setOpen(false)}
               className="mt-6 inline-flex items-center justify-center gap-2 px-5 py-4 bg-ink text-paper font-medium"
             >
-              Prendre rendez-vous
+              {lang === 'ar' ? 'حجز موعد' : 'Prendre rendez-vous'}
               <ArrowUpRight size={18} />
             </a>
           </nav>

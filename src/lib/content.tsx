@@ -42,6 +42,8 @@ export type BackendStatus = 'loading' | 'ready' | 'error';
 interface ContentContextValue {
   content: SiteContent;
   setContent: (updater: (prev: SiteContent) => SiteContent) => void;
+  lang: 'fr' | 'ar';
+  setLang: (lang: 'fr' | 'ar') => void;
   resetToDefault: () => void;
   exportJson: () => void;
   importJson: (file: File) => Promise<void>;
@@ -56,11 +58,25 @@ const ContentContext = createContext<ContentContextValue | null>(null);
 
 export function ContentProvider({ children }: { children: ReactNode }) {
   const [content, setContentState] = useState<SiteContent>(DEFAULT_CONTENT);
+  const [lang, setLangState] = useState<'fr' | 'ar'>('fr');
   const [backendStatus, setBackendStatus] = useState<BackendStatus>('loading');
   const [saving, setSaving] = useState(false);
   const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isFirstLoad = useRef(true);
+
+  useEffect(() => {
+    // Initial lang load
+    const savedLang = localStorage.getItem('ajmi-lang');
+    if (savedLang === 'ar') setLangState('ar');
+  }, []);
+
+  useEffect(() => {
+    // Sync lang with HTML dir and lang tags
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    localStorage.setItem('ajmi-lang', lang);
+  }, [lang]);
 
   // Initial load — read the SQLite database (creates it on first run).
   useEffect(() => {
@@ -157,6 +173,8 @@ export function ContentProvider({ children }: { children: ReactNode }) {
     () => ({
       content,
       setContent,
+      lang,
+      setLang: setLangState,
       resetToDefault,
       exportJson,
       importJson,
@@ -166,7 +184,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
       saving,
       lastSavedAt,
     }),
-    [content, setContent, resetToDefault, exportJson, importJson, exportSqlite, importSqlite, backendStatus, saving, lastSavedAt]
+    [content, setContent, lang, resetToDefault, exportJson, importJson, exportSqlite, importSqlite, backendStatus, saving, lastSavedAt]
   );
 
   return <ContentContext.Provider value={value}>{children}</ContentContext.Provider>;

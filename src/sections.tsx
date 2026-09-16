@@ -8,7 +8,7 @@ import { SmartImage, Linkedin, useReveal, ImageLightbox, LightboxItem } from './
 // Hero (full, used on the Home page)
 // ─────────────────────────────────────────────────────────────────
 export function Hero() {
-  const { content } = useContent();
+  const { content , lang } = useContent();
   const [showPortraitModal, setShowPortraitModal] = useState(false);
 
   return (
@@ -17,7 +17,7 @@ export function Hero() {
       className="relative min-h-screen flex flex-col justify-end pt-32 pb-16 md:pb-24 overflow-hidden"
     >
       <div className="absolute top-1/4 right-0 md:right-6 -translate-y-1/4 pointer-events-none select-none opacity-[0.04] font-display text-[25vw] leading-none text-ink">
-        {content.brandName}
+        {(lang === 'ar' && content.brandNameAr ? content.brandNameAr : content.brandName)}
       </div>
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 w-full">
@@ -27,19 +27,19 @@ export function Hero() {
               <div className="inline-flex items-center gap-3 mb-8">
                 <div className="h-px w-12 bg-gold"></div>
                 <span className="text-xs uppercase tracking-[0.3em] text-ink/60 font-medium">
-                  Cabinet d'Avocat
+                  {lang === 'ar' ? 'مكتب محاماة' : "Cabinet d'Avocat"}
                 </span>
               </div>
             </div>
 
             <h1 className="font-display text-[clamp(2.75rem,8vw,7rem)] leading-[0.95] tracking-tight text-ink animate-fade-in-up">
-              {content.heroFirstName}
+              {(lang === 'ar' && content.heroFirstNameAr ? content.heroFirstNameAr : content.heroFirstName)}
               <br />
-              <span className="italic font-serif font-light text-gold">{content.heroLastName}</span>
+              <span className="italic font-serif font-light text-gold">{(lang === 'ar' && content.heroLastNameAr ? content.heroLastNameAr : content.heroLastName)}</span>
             </h1>
 
             <p className="text-lg md:text-xl text-ink/70 max-w-2xl leading-relaxed animate-fade-in-up animation-delay-200">
-              {content.heroSubtitle}
+              {(lang === 'ar' && content.heroSubtitleAr ? content.heroSubtitleAr : content.heroSubtitle)}
             </p>
 
             <div className="flex flex-wrap gap-4 pt-4 animate-fade-in-up animation-delay-400">
@@ -47,14 +47,14 @@ export function Hero() {
                 href="#/contact"
                 className="inline-flex items-center gap-3 px-7 py-4 bg-ink text-paper font-medium hover:bg-gold transition-all duration-300 group"
               >
-                {content.ctaPrimary}
+                {(lang === 'ar' && content.ctaPrimaryAr ? content.ctaPrimaryAr : content.ctaPrimary)}
                 <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </a>
               <a
                 href="#/cabinet"
                 className="inline-flex items-center gap-3 px-7 py-4 border border-ink/20 text-ink font-medium hover:border-gold hover:text-gold transition-all duration-300"
               >
-                {content.ctaSecondary}
+                {(lang === 'ar' && content.ctaSecondaryAr ? content.ctaSecondaryAr : content.ctaSecondary)}
               </a>
             </div>
 
@@ -62,19 +62,19 @@ export function Hero() {
             <div className="pt-8 border-t border-ink/15 grid grid-cols-2 md:grid-cols-4 gap-3 animate-fade-in-up animation-delay-600">
               <div className="bg-cream/60 border border-ink/10 p-3.5 text-center group hover:border-gold/60 transition-colors">
                 <div className="font-display text-xl text-gold font-bold">20+ ans</div>
-                <div className="text-[11px] text-ink/70 uppercase tracking-wider font-medium mt-0.5">d'expérience</div>
+                <div className="text-[11px] text-ink/70 uppercase tracking-wider font-medium mt-0.5">{lang === 'ar' ? 'خبرة' : "d'expérience"}</div>
               </div>
               <div className="bg-cream/60 border border-ink/10 p-3.5 text-center group hover:border-gold/60 transition-colors">
                 <div className="font-display text-lg text-gold font-bold">2005 — CAPA</div>
-                <div className="text-[11px] text-ink/70 uppercase tracking-wider font-medium mt-0.5">Certificat de compétence</div>
+                <div className="text-[11px] text-ink/70 uppercase tracking-wider font-medium mt-0.5">{lang === 'ar' ? 'شهادة الكفاءة' : 'Certificat de compétence'}</div>
               </div>
               <div className="bg-cream/60 border border-ink/10 p-3.5 text-center group hover:border-gold/60 transition-colors">
                 <div className="font-serif text-sm font-semibold text-ink leading-tight">Master + DEA</div>
-                <div className="text-[11px] text-ink/70 uppercase tracking-wider font-medium mt-0.5">Études approfondies</div>
+                <div className="text-[11px] text-ink/70 uppercase tracking-wider font-medium mt-0.5">{lang === 'ar' ? 'دراسات معمقة' : 'Études approfondies'}</div>
               </div>
               <div className="bg-cream/60 border border-ink/10 p-3.5 text-center group hover:border-gold/60 transition-colors">
-                <div className="font-serif text-sm font-semibold text-gold leading-tight">Équipe : 6 pers.</div>
-                <div className="text-[11px] text-ink/70 uppercase tracking-wider font-medium mt-0.5">2 avocats + 4 secrétaires</div>
+                <div className="font-serif text-sm font-semibold text-gold leading-tight">{lang === 'ar' ? 'الفريق: 6 أشخاص' : 'Équipe : 6 pers.'}</div>
+                <div className="text-[11px] text-ink/70 uppercase tracking-wider font-medium mt-0.5">{lang === 'ar' ? 'محاميان + 4 كتاب' : '2 avocats + 4 secrétaires'}</div>
               </div>
             </div>
           </div>
@@ -83,8 +83,8 @@ export function Hero() {
             <div className="relative group">
               <SmartImage
                 src={content.heroPortrait}
-                alt={`${content.heroFirstName} ${content.heroLastName}, Avocat près la Cour d'Appel`}
-                label={`Portrait officiel — Me ${content.heroLastName}`}
+                alt={`${(lang === 'ar' && content.heroFirstNameAr ? content.heroFirstNameAr : content.heroFirstName)} ${(lang === 'ar' && content.heroLastNameAr ? content.heroLastNameAr : content.heroLastName)}, Avocat près la Cour d'Appel`}
+                label={`Portrait officiel — Me ${(lang === 'ar' && content.heroLastNameAr ? content.heroLastNameAr : content.heroLastName)}`}
                 onClick={() => setShowPortraitModal(true)}
                 showZoomIcon={true}
                 className="w-full aspect-[4/5] object-cover border border-ink/15 shadow-xl transition-all duration-500 group-hover:border-gold/50"
@@ -92,7 +92,7 @@ export function Hero() {
               <div className="absolute -bottom-4 -left-4 bg-ink text-paper px-5 py-3 hidden md:block shadow-lg border-l-2 border-gold pointer-events-none">
                 <div className="text-[10px] uppercase tracking-[0.2em] text-gold">Maître</div>
                 <div className="font-serif text-lg leading-tight">
-                  {content.heroFirstName} {content.heroLastName}
+                  {(lang === 'ar' && content.heroFirstNameAr ? content.heroFirstNameAr : content.heroFirstName)} {(lang === 'ar' && content.heroLastNameAr ? content.heroLastNameAr : content.heroLastName)}
                 </div>
               </div>
             </div>
@@ -102,7 +102,7 @@ export function Hero() {
                 items={[
                   {
                     src: content.heroPortrait,
-                    alt: `Maître ${content.heroFirstName} ${content.heroLastName} — Avocat près la Cour d'Appel`,
+                    alt: `Maître ${(lang === 'ar' && content.heroFirstNameAr ? content.heroFirstNameAr : content.heroFirstName)} ${(lang === 'ar' && content.heroLastNameAr ? content.heroLastNameAr : content.heroLastName)} — Avocat près la Cour d'Appel`,
                   },
                 ]}
                 currentIndex={0}
@@ -119,20 +119,20 @@ export function Hero() {
                 <div className="flex items-start gap-3">
                   <MapPin size={18} className="text-gold mt-0.5 shrink-0" />
                   <div className="text-ink/80 leading-relaxed">
-                    {content.addressLine1}<br />
-                    {content.addressLine2}
+                    {(lang === 'ar' && content.addressLine1Ar ? content.addressLine1Ar : content.addressLine1)}<br />
+                    {(lang === 'ar' && content.addressLine2Ar ? content.addressLine2Ar : content.addressLine2)}
                   </div>
                 </div>
                 <a href={`tel:${content.phone.replace(/\s/g, '')}`} className="flex items-start gap-3 group">
                   <Phone size={18} className="text-gold mt-0.5 shrink-0" />
                   <div className="text-ink/80 group-hover:text-gold transition-colors">
-                    {content.phone}
+                    {(lang === 'ar' && content.phoneAr ? content.phoneAr : content.phone)}
                   </div>
                 </a>
-                <a href={`mailto:${content.email}`} className="flex items-start gap-3 group">
+                <a href={`mailto:${(lang === 'ar' && content.emailAr ? content.emailAr : content.email)}`} className="flex items-start gap-3 group">
                   <Mail size={18} className="text-gold mt-0.5 shrink-0" />
                   <div className="text-ink/80 group-hover:text-gold transition-colors break-all">
-                    {content.email}
+                    {(lang === 'ar' && content.emailAr ? content.emailAr : content.email)}
                   </div>
                 </a>
               </div>
@@ -144,7 +144,7 @@ export function Hero() {
                   className="inline-flex items-center gap-2 text-sm font-medium text-ink hover:text-gold transition-colors"
                 >
                   <Linkedin size={16} />
-                  {content.linkedinLabel}
+                  {(lang === 'ar' && content.linkedinLabelAr ? content.linkedinLabelAr : content.linkedinLabel)}
                 </a>
               </div>
             </div>
@@ -166,7 +166,7 @@ export function Hero() {
 // About / Présentation
 // ─────────────────────────────────────────────────────────────────
 export function About() {
-  const { content } = useContent();
+  const { content , lang } = useContent();
   const { ref, visible } = useReveal<HTMLDivElement>();
   const [showAboutModal, setShowAboutModal] = useState(false);
 
@@ -184,23 +184,23 @@ export function About() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="h-px w-10 bg-gold"></div>
                 <span className="text-xs uppercase tracking-[0.3em] text-ink/60 font-medium">
-                  {content.aboutEyebrow}
+                  {(lang === 'ar' && content.aboutEyebrowAr ? content.aboutEyebrowAr : content.aboutEyebrow)}
                 </span>
               </div>
               <h2 className="font-display text-5xl md:text-6xl leading-none text-ink">
-                {content.aboutTitleLine1}<br />
-                <span className="italic font-serif font-light text-gold">{content.aboutTitleLine2}</span>
+                {(lang === 'ar' && content.aboutTitleLine1Ar ? content.aboutTitleLine1Ar : content.aboutTitleLine1)}<br />
+                <span className="italic font-serif font-light text-gold">{(lang === 'ar' && content.aboutTitleLine2Ar ? content.aboutTitleLine2Ar : content.aboutTitleLine2)}</span>
               </h2>
             </div>
           </div>
 
           <div className="lg:col-span-8 space-y-6 text-lg leading-[1.9] text-ink/80 font-light">
             <p className="text-2xl md:text-3xl font-serif leading-snug text-ink">
-              {content.aboutLead}{' '}
-              <em className="text-gold not-italic font-medium">{content.aboutHighlight}</em>.
+              {(lang === 'ar' && content.aboutLeadAr ? content.aboutLeadAr : content.aboutLead)}{' '}
+              <em className="text-gold not-italic font-medium">{(lang === 'ar' && content.aboutHighlightAr ? content.aboutHighlightAr : content.aboutHighlight)}</em>.
             </p>
-            <p>{content.aboutParagraph1}</p>
-            <p>{content.aboutParagraph2}</p>
+            <p>{(lang === 'ar' && content.aboutParagraph1Ar ? content.aboutParagraph1Ar : content.aboutParagraph1)}</p>
+            <p>{(lang === 'ar' && content.aboutParagraph2Ar ? content.aboutParagraph2Ar : content.aboutParagraph2)}</p>
 
             <div className="pt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
               {content.values.map((v) => (
@@ -215,7 +215,7 @@ export function About() {
               <div className="sm:col-span-3">
                 <SmartImage
                   src={content.aboutPhoto}
-                  alt={`Maître ${content.heroLastName} en intervention lors d'une conférence`}
+                  alt={`Maître ${(lang === 'ar' && content.heroLastNameAr ? content.heroLastNameAr : content.heroLastName)} en intervention lors d'une conférence`}
                   label="En intervention — conférence"
                   onClick={() => setShowAboutModal(true)}
                   showZoomIcon={true}
@@ -224,7 +224,7 @@ export function About() {
               </div>
               <div className="sm:col-span-2 border-l-2 border-gold pl-5">
                 <p className="font-serif italic text-lg text-ink leading-snug">
-                  {content.aboutQuote}
+                  {(lang === 'ar' && content.aboutQuoteAr ? content.aboutQuoteAr : content.aboutQuote)}
                 </p>
               </div>
             </div>
@@ -234,7 +234,7 @@ export function About() {
                 items={[
                   {
                     src: content.aboutPhoto,
-                    alt: `Maître ${content.heroFirstName} ${content.heroLastName} en intervention lors d'une conférence`,
+                    alt: `Maître ${(lang === 'ar' && content.heroFirstNameAr ? content.heroFirstNameAr : content.heroFirstName)} ${(lang === 'ar' && content.heroLastNameAr ? content.heroLastNameAr : content.heroLastName)} en intervention lors d'une conférence`,
                   },
                 ]}
                 currentIndex={0}
@@ -253,31 +253,31 @@ export function About() {
 // Team Section — Maître Ramzi + 2 Avocats Assistants
 // ─────────────────────────────────────────────────────────────────
 export function TeamSection() {
-  const { content } = useContent();
+  const { content , lang } = useContent();
   const { ref, visible } = useReveal<HTMLDivElement>();
 
   const team = [
     {
       id: 'lead',
-      name: `Maître ${content.heroFirstName} ${content.heroLastName}`,
+      name: `Maître ${(lang === 'ar' && content.heroFirstNameAr ? content.heroFirstNameAr : content.heroFirstName)} ${(lang === 'ar' && content.heroLastNameAr ? content.heroLastNameAr : content.heroLastName)}`,
       role: content.brandTagline,
-      detail: "20+ ans d'expérience · CAPA 2005 · Master + DEA en Droit Privé",
+      detail: "20+ ans {lang === 'ar' ? 'خبرة' : "d'expérience"} · CAPA 2005 · Master + DEA en Droit Privé",
       photo: content.heroPortrait,
       isLead: true,
     },
     {
       id: 'assistant1',
-      name: 'Avocat Assistant',
-      role: 'Avocat Collaborateur',
-      detail: 'Droit des sociétés & contentieux civil',
+      name: '{lang === 'ar' ? 'محام مساعد' : 'Avocat Assistant'}',
+      role: '{lang === 'ar' ? 'محام متعاون' : 'Avocat Collaborateur'}',
+      detail: '{lang === 'ar' ? 'قانون الشركات والنزاعات المدنية' : 'Droit des sociétés & contentieux civil'}',
       photo: '/images/avocat-assistant-1.jpg',
       isLead: false,
     },
     {
       id: 'assistant2',
-      name: 'Avocate Assistante',
-      role: 'Avocate Collaboratrice',
-      detail: 'Droit de la famille & médiation',
+      name: '{lang === 'ar' ? 'محامية مساعدة' : 'Avocate Assistante'}',
+      role: '{lang === 'ar' ? 'محامية متعاونة' : 'Avocate Collaboratrice'}',
+      detail: '{lang === 'ar' ? 'قانون الأسرة والوساطة' : 'Droit de la famille & médiation'}',
       photo: '/images/avocat-assistant-2.jpg',
       isLead: false,
     },
@@ -294,16 +294,16 @@ export function TeamSection() {
         <div className="flex items-center gap-3 mb-6">
           <div className="h-px w-10 bg-gold"></div>
           <span className="text-xs uppercase tracking-[0.3em] text-ink/60 font-medium">
-            Notre Équipe
+            {lang === 'ar' ? 'فريقنا' : 'Notre Équipe'}
           </span>
         </div>
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
           <h2 className="font-display text-5xl md:text-7xl leading-none text-ink">
-            Cabinet &<br />
-            <span className="italic font-serif font-light text-gold">Avocats</span>
+            {lang === 'ar' ? 'المكتب و<br />' : 'Cabinet &<br />'}
+            <span className="italic font-serif font-light text-gold">{lang === 'ar' ? 'المحامون' : 'Avocats'}</span>
           </h2>
           <p className="max-w-md text-ink/70 leading-relaxed">
-            Une équipe de 3 avocats qualifiés et 4 secrétaires juridiques dédiés, pour un suivi rigoureux et personnalisé de chaque dossier.
+            {lang === 'ar' ? 'فريق يتكون من 3 محامين مؤهلين و4 كتاب قانونيين متفانين، لمتابعة دقيقة وشخصية لكل ملف.' : 'Une équipe de 3 avocats qualifiés et 4 secrétaires juridiques dédiés, pour un suivi rigoureux et personnalisé de chaque dossier.'}
           </p>
         </div>
 
@@ -329,7 +329,7 @@ export function TeamSection() {
                 />
                 {member.isLead && (
                   <div className="absolute top-4 left-4 bg-gold text-paper text-[10px] uppercase tracking-[0.2em] font-bold px-3 py-1.5 shadow-lg">
-                    Avocat Principal
+                    {lang === 'ar' ? 'محام رئيسي' : 'Avocat Principal'}
                   </div>
                 )}
               </div>
@@ -359,9 +359,9 @@ export function TeamSection() {
             <Phone size={20} className="text-gold" />
           </div>
           <div>
-            <div className="text-xs uppercase tracking-[0.2em] text-gold font-semibold mb-1">Secrétariat Juridique</div>
+            <div className="text-xs uppercase tracking-[0.2em] text-gold font-semibold mb-1">{lang === 'ar' ? 'الكتابة القانونية' : 'Secrétariat Juridique'}</div>
             <p className="text-ink/70 text-sm leading-relaxed">
-              4 secrétaires juridiques qualifiées assurent l'accueil, la gestion des dossiers et le suivi administratif de chaque client.
+              {lang === 'ar' ? '4 كتاب قانونيين مؤهلين يضمنون الاستقبال وإدارة الملفات والمتابعة الإدارية لكل عميل.' : "4 secrétaires juridiques qualifiées assurent l'accueil, la gestion des dossiers et le suivi administratif de chaque client."}
             </p>
           </div>
         </div>
@@ -374,7 +374,7 @@ export function TeamSection() {
 // Practice Areas
 // ─────────────────────────────────────────────────────────────────
 export function Practice({ showHeader = false }: { showHeader?: boolean }) {
-  const { content } = useContent();
+  const { content , lang } = useContent();
   const { ref, visible } = useReveal<HTMLDivElement>();
   return (
     <section className="py-16 md:py-24 bg-paper">
@@ -390,7 +390,7 @@ export function Practice({ showHeader = false }: { showHeader?: boolean }) {
               <div className="flex items-center gap-3 mb-6">
                 <div className="h-px w-10 bg-gold"></div>
                 <span className="text-xs uppercase tracking-[0.3em] text-ink/60 font-medium">
-                  Domaines d'intervention
+                  {lang === 'ar' ? 'مجالات' : 'Domaines'} d'intervention
                 </span>
               </div>
               <h2 className="font-display text-5xl md:text-7xl leading-none text-ink">
@@ -399,7 +399,7 @@ export function Practice({ showHeader = false }: { showHeader?: boolean }) {
               </h2>
             </div>
             <p className="max-w-md text-ink/70 leading-relaxed">
-              {content.practiceIntro}
+              {(lang === 'ar' && content.practiceIntroAr ? content.practiceIntroAr : content.practiceIntro)}
             </p>
           </div>
         )}
@@ -445,7 +445,7 @@ export function Practice({ showHeader = false }: { showHeader?: boolean }) {
 // Compact practice teaser (used on the Home page)
 // ─────────────────────────────────────────────────────────────────
 export function PracticeTeaser() {
-  const { content } = useContent();
+  const { content , lang } = useContent();
   const { ref, visible } = useReveal<HTMLDivElement>();
   return (
     <section className="py-24 md:py-32 bg-paper">
@@ -460,7 +460,7 @@ export function PracticeTeaser() {
             <div className="flex items-center gap-3 mb-6">
               <div className="h-px w-10 bg-gold"></div>
               <span className="text-xs uppercase tracking-[0.3em] text-ink/60 font-medium">
-                Domaines d'intervention
+                {lang === 'ar' ? 'مجالات' : 'Domaines'} d'intervention
               </span>
             </div>
             <h2 className="font-display text-4xl md:text-6xl leading-none text-ink">
@@ -504,7 +504,7 @@ export function PracticeTeaser() {
 // Experience & Engagements
 // ─────────────────────────────────────────────────────────────────
 export function Experience({ showHeader = false }: { showHeader?: boolean }) {
-  const { content } = useContent();
+  const { content , lang } = useContent();
   const { ref, visible } = useReveal<HTMLDivElement>();
   return (
     <section className="py-24 md:py-36 bg-ink text-paper relative overflow-hidden">
@@ -533,7 +533,7 @@ export function Experience({ showHeader = false }: { showHeader?: boolean }) {
                     <span className="italic font-serif font-light text-gold">& engagements</span>
                   </h2>
                   <p className="mt-8 text-paper/70 leading-relaxed">
-                    {content.experienceIntro}
+                    {(lang === 'ar' && content.experienceIntroAr ? content.experienceIntroAr : content.experienceIntro)}
                   </p>
                 </>
               ) : (
@@ -553,14 +553,14 @@ export function Experience({ showHeader = false }: { showHeader?: boolean }) {
                     {String(i + 1).padStart(2, '0')}
                   </div>
                   <h3 className="font-display text-2xl md:text-3xl leading-tight mb-1">
-                    {exp.title}
+                    {(lang === 'ar' && exp.titleAr ? exp.titleAr : exp.title)}
                   </h3>
                   <div className="text-paper/60 font-serif italic text-lg">
-                    {exp.org}
+                    {(lang === 'ar' && exp.orgAr ? exp.orgAr : exp.org)}
                   </div>
                   {exp.detail && (
                     <p className="mt-3 text-paper/70 leading-relaxed max-w-xl">
-                      {exp.detail}
+                      {(lang === 'ar' && exp.detailAr ? exp.detailAr : exp.detail)}
                     </p>
                   )}
                 </div>
@@ -578,6 +578,7 @@ export function Experience({ showHeader = false }: { showHeader?: boolean }) {
 // ─────────────────────────────────────────────────────────────────
 export function MediationSection() {
   const { ref, visible } = useReveal<HTMLDivElement>();
+  const { lang } = useContent();
   return (
     <section className="py-24 md:py-36 bg-cream/40" id="mediation">
       <div
@@ -591,22 +592,22 @@ export function MediationSection() {
             <div className="flex items-center gap-3">
               <div className="h-px w-10 bg-gold"></div>
               <span className="text-xs uppercase tracking-[0.3em] text-ink/60 font-medium">
-                Résolution alternative des différends
+                {lang === 'ar' ? 'الحلول البديلة للنزاعات' : 'Résolution alternative des différends'}
               </span>
             </div>
             <h2 className="font-display text-4xl md:text-6xl leading-tight text-ink">
-              Médiation &<br />
-              <span className="italic font-serif font-light text-gold">règlement amiable</span>
+              {lang === 'ar' ? 'الوساطة و<br />' : 'Médiation &<br />'}
+              <span className="italic font-serif font-light text-gold">{lang === 'ar' ? 'التسوية الودية' : 'règlement amiable'}</span>
             </h2>
             <p className="text-lg text-ink/80 leading-relaxed font-light">
-              Le cabinet privilégie, chaque fois que possible, la recherche de solutions négociées et transactionnelles. La médiation permet de résoudre les litiges de manière rapide, confidentielle et économique tout en préservant les relations professionnelles et commerciales.
+              {lang === 'ar' ? 'يفضل المكتب، كلما أمكن ذلك، البحث عن حلول تفاوضية وصلحية. تتيح الوساطة حل النزاعات بطريقة سريعة وسرية واقتصادية مع الحفاظ على العلاقات المهنية والتجارية.' : 'Le cabinet privilégie, chaque fois que possible, la recherche de solutions négociées et transactionnelles. La médiation permet de résoudre les litiges de manière rapide, confidentielle et économique tout en préservant les relations professionnelles et commerciales.'}
             </p>
             <div className="pt-2">
               <a
                 href="#/contact"
                 className="inline-flex items-center gap-3 px-7 py-4 bg-ink text-paper font-medium hover:bg-gold transition-all duration-300 group"
               >
-                Demander une consultation / médiation
+                {lang === 'ar' ? 'طلب استشارة / وساطة' : 'Demander une consultation / médiation'}
                 <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </a>
             </div>
@@ -617,7 +618,7 @@ export function MediationSection() {
               <div className="w-12 h-12 bg-ink/5 border border-ink/10 flex items-center justify-center text-gold mb-4">
                 <Building2 size={24} />
               </div>
-              <h3 className="font-serif text-2xl text-ink">Négociation des Affaires</h3>
+              <h3 className="font-serif text-2xl text-ink">{lang === 'ar' ? 'مفاوضات الأعمال' : 'Négociation des Affaires'}</h3>
               <p className="text-sm text-ink/70 leading-relaxed">
                 Règlement amiable des conflits d'associés, litiges commerciaux inter-entreprises et négociations contractuelles.
               </p>
@@ -956,7 +957,7 @@ export function Publications({ showHeader = false }: { showHeader?: boolean }) {
               {
                 src: selectedCoverModal,
                 alt: mainBook
-                  ? `Couverture officielle de l'ouvrage: "${mainBook.title}" — Maître ${content.heroFirstName} ${content.heroLastName} — Latrach Édition 2026`
+                  ? `Couverture officielle de l'ouvrage: "${mainBook.title}" — Maître ${(lang === 'ar' && content.heroFirstNameAr ? content.heroFirstNameAr : content.heroFirstName)} ${(lang === 'ar' && content.heroLastNameAr ? content.heroLastNameAr : content.heroLastName)} — Latrach Édition 2026`
                   : 'Couverture de l\'ouvrage',
               },
             ]}
@@ -1013,7 +1014,7 @@ export function Clients() {
 // Contact
 // ─────────────────────────────────────────────────────────────────
 export function Contact({ showHeader = false }: { showHeader?: boolean }) {
-  const { content } = useContent();
+  const { content , lang } = useContent();
   const { ref, visible } = useReveal<HTMLDivElement>();
   return (
     <section className="py-16 md:py-24 bg-paper">
@@ -1037,7 +1038,7 @@ export function Contact({ showHeader = false }: { showHeader?: boolean }) {
                 <span className="italic font-serif font-light text-gold">votre dossier</span>
               </h2>
               <p className="max-w-md text-ink/70 leading-relaxed">
-                {content.contactIntro}
+                {(lang === 'ar' && content.contactIntroAr ? content.contactIntroAr : content.contactIntro)}
               </p>
             </div>
           </div>
@@ -1054,12 +1055,12 @@ export function Contact({ showHeader = false }: { showHeader?: boolean }) {
                   <span className="text-xs uppercase tracking-[0.2em] text-ink/60">Téléphone</span>
                 </div>
                 <div className="font-display text-2xl text-ink group-hover:text-gold transition-colors">
-                  {content.phone}
+                  {(lang === 'ar' && content.phoneAr ? content.phoneAr : content.phone)}
                 </div>
               </a>
 
               <a
-                href={`mailto:${content.email}`}
+                href={`mailto:${(lang === 'ar' && content.emailAr ? content.emailAr : content.email)}`}
                 className="group block border border-ink/15 p-6 hover:border-gold transition-colors duration-500"
               >
                 <div className="flex items-center gap-3 mb-3">
@@ -1067,7 +1068,7 @@ export function Contact({ showHeader = false }: { showHeader?: boolean }) {
                   <span className="text-xs uppercase tracking-[0.2em] text-ink/60">Email</span>
                 </div>
                 <div className="font-serif text-lg text-ink group-hover:text-gold transition-colors break-all">
-                  {content.email}
+                  {(lang === 'ar' && content.emailAr ? content.emailAr : content.email)}
                 </div>
               </a>
 
@@ -1077,8 +1078,8 @@ export function Contact({ showHeader = false }: { showHeader?: boolean }) {
                   <span className="text-xs uppercase tracking-[0.2em] text-ink/60">Adresse</span>
                 </div>
                 <div className="font-display text-xl md:text-2xl text-ink leading-snug">
-                  {content.addressLine1}<br />
-                  {content.addressLine2}, Tunisie
+                  {(lang === 'ar' && content.addressLine1Ar ? content.addressLine1Ar : content.addressLine1)}<br />
+                  {(lang === 'ar' && content.addressLine2Ar ? content.addressLine2Ar : content.addressLine2)}, Tunisie
                 </div>
               </div>
 
@@ -1093,7 +1094,7 @@ export function Contact({ showHeader = false }: { showHeader?: boolean }) {
                   <span className="text-xs uppercase tracking-[0.2em] text-ink/60">LinkedIn</span>
                 </div>
                 <div className="font-serif text-lg text-ink group-hover:text-gold transition-colors flex items-center justify-between">
-                  {content.heroFirstName} {content.heroLastName}
+                  {(lang === 'ar' && content.heroFirstNameAr ? content.heroFirstNameAr : content.heroFirstName)} {(lang === 'ar' && content.heroLastNameAr ? content.heroLastNameAr : content.heroLastName)}
                   <ArrowUpRight size={20} />
                 </div>
               </a>

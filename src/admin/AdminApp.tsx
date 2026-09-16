@@ -32,6 +32,7 @@ function AdminLogin({
   signIn: (password: string) => Promise<boolean>;
   authError: string | null;
 }) {
+  const { content } = useContent();
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
   const [submitting, setSubmitting] = useState(false);
