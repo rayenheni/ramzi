@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import {
-  Scale, LayoutDashboard, Info, Briefcase, History, Images, BookOpen,
+  LayoutDashboard, Info, Briefcase, History, Images, BookOpen,
   Building2, LogOut, ExternalLink, Download, Upload, RotateCcw, Lock, Eye, EyeOff,
   Database, Loader2, CheckCircle2, AlertTriangle, KeyRound, ShoppingBag,
 } from 'lucide-react';

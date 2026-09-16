@@ -24,6 +24,18 @@ html[dir="rtl"] {
   font-family: 'Tajawal', sans-serif;
 }
 
+/* Arabic-script safeguard: letter-spacing breaks Arabic ligatures and
+   harms readability, so neutralize all tracking utilities in RTL mode. */
+html[dir="rtl"] :where([class*="tracking-"]) {
+  letter-spacing: normal;
+}
+
+/* Explicit RTL block used for Arabic titles inside any layout direction. */
+.dir-rtl {
+  direction: rtl;
+  text-align: right;
+}
+
 body {
   font-family: var(--font-sans);
   background-color: #f1efeb;

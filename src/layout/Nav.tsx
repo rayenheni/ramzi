@@ -116,7 +116,7 @@ export default function Nav({ currentHash }: { currentHash: string }) {
             <button
               onClick={() => setOpen(!open)}
               className="text-ink"
-              aria-label="Menu"
+              aria-label={lang === 'ar' ? 'القائمة' : 'Menu'}
             >
               {open ? <X size={24} /> : <Menu size={24} />}
             </button>

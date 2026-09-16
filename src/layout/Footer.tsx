@@ -67,11 +67,11 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <Phone size={14} className="text-gold shrink-0" />
-                <a href={`tel:${content.phone.replace(/\s/g, '')}`} className="hover:text-gold transition-colors">{content.phone}</a>
+                <a href={`tel:${content.phone.replace(/\s/g, '')}`} dir="ltr" className="hover:text-gold transition-colors">{content.phone}</a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail size={14} className="text-gold shrink-0" />
-                <a href={`mailto:${content.email}`} className="hover:text-gold transition-colors break-all">{content.email}</a>
+                <a href={`mailto:${content.email}`} dir="ltr" className="hover:text-gold transition-colors break-all">{content.email}</a>
               </li>
             </ul>
           </div>

@@ -62,6 +62,7 @@ const SCHEMA = `
     id TEXT PRIMARY KEY,
     src TEXT,
     alt TEXT,
+    altAr TEXT,
     large INTEGER,
     category TEXT,
     position INTEGER
@@ -69,15 +70,19 @@ const SCHEMA = `
   CREATE TABLE IF NOT EXISTS publications (
     id TEXT PRIMARY KEY,
     type TEXT,
+    typeAr TEXT,
     icon TEXT,
     title TEXT,
     titleAr TEXT,
     meta TEXT,
+    metaAr TEXT,
     coverImage TEXT,
     isbn TEXT,
     price TEXT,
     description TEXT,
+    descriptionAr TEXT,
     fullContent TEXT,
+    fullContentAr TEXT,
     position INTEGER
   );
   CREATE TABLE IF NOT EXISTS reservations (
@@ -97,6 +102,7 @@ const SCHEMA = `
   CREATE TABLE IF NOT EXISTS clients (
     id TEXT PRIMARY KEY,
     name TEXT,
+    nameAr TEXT,
     position INTEGER
   );
 `;
@@ -156,13 +162,13 @@ function writeContent(db: Database, content: SiteContent) {
 
     db.run('DELETE FROM gallery;');
     content.gallery.forEach((g, i) => {
-      db.run('INSERT INTO gallery (id, src, alt, large, category, position) VALUES (?, ?, ?, ?, ?, ?);', [g.id, g.src, g.alt, g.large ? 1 : 0, g.category ?? '', i]);
+      db.run('INSERT INTO gallery (id, src, alt, altAr, large, category, position) VALUES (?, ?, ?, ?, ?, ?, ?);', [g.id, g.src, g.alt, g.altAr ?? '', g.large ? 1 : 0, g.category ?? '', i]);
     });
 
     db.run('DELETE FROM publications;');
     content.publications.forEach((p, i) => {
-      db.run('INSERT INTO publications (id, type, icon, title, titleAr, meta, coverImage, isbn, price, description, fullContent, position) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);', [
-        p.id, p.type, p.icon, p.title, p.titleAr ?? '', p.meta, p.coverImage ?? '', p.isbn ?? '', p.price ?? '', p.description ?? '', p.fullContent ?? '', i
+      db.run('INSERT INTO publications (id, type, typeAr, icon, title, titleAr, meta, metaAr, coverImage, isbn, price, description, descriptionAr, fullContent, fullContentAr, position) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);', [
+        p.id, p.type, p.typeAr ?? '', p.icon, p.title, p.titleAr ?? '', p.meta, p.metaAr ?? '', p.coverImage ?? '', p.isbn ?? '', p.price ?? '', p.description ?? '', p.descriptionAr ?? '', p.fullContent ?? '', p.fullContentAr ?? '', i
       ]);
     });
 
@@ -185,6 +191,29 @@ function writeContent(db: Database, content: SiteContent) {
   }
 }
 
+// Adds columns introduced after the very first release to databases
+// created earlier. Each ALTER is best-effort: it fails harmlessly when
+// the column already exists.
+function ensureColumns(db: Database) {
+  const migrations: [table: string, column: string, ddl: string][] = [
+    ['gallery', 'altAr', 'ALTER TABLE gallery ADD COLUMN altAr TEXT;'],
+    ['publications', 'typeAr', 'ALTER TABLE publications ADD COLUMN typeAr TEXT;'],
+    ['publications', 'metaAr', 'ALTER TABLE publications ADD COLUMN metaAr TEXT;'],
+    ['publications', 'descriptionAr', 'ALTER TABLE publications ADD COLUMN descriptionAr TEXT;'],
+    ['publications', 'fullContentAr', 'ALTER TABLE publications ADD COLUMN fullContentAr TEXT;'],
+    ['clients', 'nameAr', 'ALTER TABLE clients ADD COLUMN nameAr TEXT;'],
+  ];
+  for (const [table, column, ddl] of migrations) {
+    try {
+      const info = db.exec(`PRAGMA table_info(${table});`);
+      const cols: unknown[] = info[0]?.values.map((row) => row[1]) ?? [];
+      if (!cols.includes(column)) db.run(ddl);
+    } catch {
+      /* ignore — the column already exists or the table is fresh */
+    }
+  }
+}
+
 function readContent(db: Database): SiteContent {
   // Ensure schema columns exist
   try {
@@ -192,6 +221,7 @@ function readContent(db: Database): SiteContent {
   } catch {
     /* ignore */
   }
+  ensureColumns(db);
 
   const settings: Record<string, string> = {};
   const settingsRes = db.exec('SELECT key, value FROM settings;');
@@ -202,35 +232,44 @@ function readContent(db: Database): SiteContent {
   }
 
   const values = queryRows(db, 'SELECT id, label, labelAr, description, descriptionAr FROM values_list ORDER BY position;').map((r) => ({
-    id: String(r.id), label: String(r.label ?? ''), desc: String(r.description ?? ''),
+    id: String(r.id), label: String(r.label ?? ''), labelAr: String(r.labelAr ?? ''),
+    desc: String(r.description ?? ''), descAr: String(r.descriptionAr ?? ''),
   }));
 
   const practiceAreas = queryRows(db, 'SELECT id, icon, title, titleAr, description, descriptionAr FROM practice_areas ORDER BY position;').map((r) => ({
-    id: String(r.id), icon: String(r.icon ?? 'Scale'), title: String(r.title ?? ''), description: String(r.description ?? ''),
+    id: String(r.id), icon: String(r.icon ?? 'Scale'), title: String(r.title ?? ''), titleAr: String(r.titleAr ?? ''),
+    description: String(r.description ?? ''), descriptionAr: String(r.descriptionAr ?? ''),
   }));
 
   const experiences = queryRows(db, 'SELECT id, title, titleAr, org, orgAr, detail, detailAr FROM experiences ORDER BY position;').map((r) => ({
-    id: String(r.id), title: String(r.title ?? ''), org: String(r.org ?? ''), detail: String(r.detail ?? ''),
+    id: String(r.id), title: String(r.title ?? ''), titleAr: String(r.titleAr ?? ''),
+    org: String(r.org ?? ''), orgAr: String(r.orgAr ?? ''),
+    detail: String(r.detail ?? ''), detailAr: String(r.detailAr ?? ''),
   }));
 
-  const galleryRows = queryRows(db, 'SELECT id, src, alt, large, category FROM gallery ORDER BY position;');
+  const galleryRows = queryRows(db, 'SELECT id, src, alt, altAr, large, category FROM gallery ORDER BY position;');
   const gallery = galleryRows.map((r) => ({
-    id: String(r.id), src: String(r.src ?? ''), alt: String(r.alt ?? ''), large: Number(r.large) === 1, category: String(r.category ?? 'moscow'),
+    id: String(r.id), src: String(r.src ?? ''), alt: String(r.alt ?? ''), altAr: String(r.altAr ?? ''),
+    large: Number(r.large) === 1, category: String(r.category ?? 'moscow'),
   }));
 
-  const publicationsRows = queryRows(db, 'SELECT id, type, icon, title, titleAr, meta, coverImage, isbn, price, description, fullContent FROM publications ORDER BY position;');
+  const publicationsRows = queryRows(db, 'SELECT id, type, typeAr, icon, title, titleAr, meta, metaAr, coverImage, isbn, price, description, descriptionAr, fullContent, fullContentAr FROM publications ORDER BY position;');
   const publications = publicationsRows.map((r) => ({
     id: String(r.id),
     type: String(r.type ?? ''),
+    typeAr: String(r.typeAr ?? ''),
     icon: String(r.icon ?? 'FileText'),
     title: String(r.title ?? ''),
     titleAr: String(r.titleAr ?? ''),
     meta: String(r.meta ?? ''),
+    metaAr: String(r.metaAr ?? ''),
     coverImage: String(r.coverImage ?? ''),
     isbn: String(r.isbn ?? ''),
     price: String(r.price ?? ''),
     description: String(r.description ?? ''),
+    descriptionAr: String(r.descriptionAr ?? ''),
     fullContent: String(r.fullContent ?? ''),
+    fullContentAr: String(r.fullContentAr ?? ''),
   }));
 
   const reservationsRows = queryRows(db, 'SELECT id, publicationId, publicationTitle, clientName, clientPhone, clientEmail, clientAddress, quantity, status, notes, createdAt FROM reservations ORDER BY position;');
@@ -254,11 +293,8 @@ function readContent(db: Database): SiteContent {
 
   const scalars = Object.fromEntries(SCALAR_KEYS.map((k) => [k, settings[k] ?? (DEFAULT_CONTENT[k] as string)]));
 
-  // Migration/Sync check: Automatically update DB with DEFAULT_CONTENT if outdated
-  if (settings.heroLastName !== 'Lahmadi' || !settings.heroPortrait?.includes('ramzi') || publications.length > 0) {
-    writeContent(db, DEFAULT_CONTENT);
-    return DEFAULT_CONTENT;
-  }
+  // NOTE: never wipe user data here. Fresh databases are seeded in getDb();
+  // existing ones are migrated non-destructively by ensureColumns() above.
 
   return {
     ...DEFAULT_CONTENT,
@@ -295,6 +331,14 @@ async function getDb(): Promise<Database> {
     const saved = await idbGet<Uint8Array>(IDB_KEY);
     if (saved) {
       dbInstance = new SQL.Database(saved);
+      // Bring databases created by older releases up to date
+      // (new *Ar columns) before any read or write.
+      try {
+        dbInstance.run(SCHEMA);
+      } catch {
+        /* ignore */
+      }
+      ensureColumns(dbInstance);
     } else {
       dbInstance = new SQL.Database();
       const passwordHash = await hashPassword(DEFAULT_PASSWORD);
