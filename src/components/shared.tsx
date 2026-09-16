@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ImageOff, Maximize2, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useContent } from '../lib/content';
 
 // ─────────────────────────────────────────────────────────────────
 // SmartImage: shows the real photo when available, otherwise falls
@@ -86,20 +87,25 @@ export function ImageLightbox({
   onClose: () => void;
   onNavigate: (index: number) => void;
 }) {
+  const { lang } = useContent();
+  const isRtl = lang === 'ar';
+
   useEffect(() => {
     if (currentIndex === null) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowLeft') onNavigate((currentIndex - 1 + items.length) % items.length);
-      if (e.key === 'ArrowRight') onNavigate((currentIndex + 1) % items.length);
+      if (e.key === 'ArrowLeft') onNavigate((currentIndex + (isRtl ? 1 : -1) + items.length) % items.length);
+      if (e.key === 'ArrowRight') onNavigate((currentIndex + (isRtl ? -1 : 1) + items.length) % items.length);
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, items.length, onClose, onNavigate]);
+  }, [currentIndex, items.length, onClose, onNavigate, isRtl]);
 
   if (currentIndex === null || !items[currentIndex]) return null;
 
   const current = items[currentIndex];
+  const goPrev = () => onNavigate((currentIndex + (isRtl ? 1 : -1) + items.length) % items.length);
+  const goNext = () => onNavigate((currentIndex + (isRtl ? -1 : 1) + items.length) % items.length);
 
   return (
     <div className="fixed inset-0 z-50 bg-ink/95 backdrop-blur-md flex flex-col justify-between p-4 md:p-8 animate-fade-in">
@@ -107,13 +113,13 @@ export function ImageLightbox({
       <div className="flex items-center justify-between text-paper/80 border-b border-paper/10 pb-4">
         <div className="flex items-center gap-3">
           <span className="text-xs uppercase tracking-[0.25em] text-gold font-medium">
-            Photo {currentIndex + 1} / {items.length}
+            {isRtl ? 'صورة' : 'Photo'} {currentIndex + 1} / {items.length}
           </span>
         </div>
         <button
           onClick={onClose}
           className="p-2 hover:bg-paper/10 rounded-full text-paper/80 hover:text-paper transition-colors"
-          title="Fermer (Échap)"
+          title={isRtl ? 'إغلاق (Esc)' : 'Fermer (Échap)'}
         >
           <X size={24} />
         </button>
@@ -123,11 +129,11 @@ export function ImageLightbox({
       <div className="relative flex-1 flex items-center justify-center my-4 overflow-hidden">
         {items.length > 1 && (
           <button
-            onClick={() => onNavigate((currentIndex - 1 + items.length) % items.length)}
-            className="absolute left-2 md:left-6 z-10 p-3 bg-ink/60 hover:bg-gold text-paper rounded-full transition-all duration-300 backdrop-blur-sm"
-            title="Photo précédente (Flèche Gauche)"
+            onClick={goPrev}
+            className="absolute start-2 md:start-6 z-10 p-3 bg-ink/60 hover:bg-gold text-paper rounded-full transition-all duration-300 backdrop-blur-sm"
+            title={isRtl ? 'الصورة السابقة' : 'Photo précédente (Flèche Gauche)'}
           >
-            <ChevronLeft size={24} />
+            <ChevronLeft size={24} className="rtl:rotate-180" />
           </button>
         )}
 
@@ -139,11 +145,11 @@ export function ImageLightbox({
 
         {items.length > 1 && (
           <button
-            onClick={() => onNavigate((currentIndex + 1) % items.length)}
-            className="absolute right-2 md:right-6 z-10 p-3 bg-ink/60 hover:bg-gold text-paper rounded-full transition-all duration-300 backdrop-blur-sm"
-            title="Photo suivante (Flèche Droite)"
+            onClick={goNext}
+            className="absolute end-2 md:end-6 z-10 p-3 bg-ink/60 hover:bg-gold text-paper rounded-full transition-all duration-300 backdrop-blur-sm"
+            title={isRtl ? 'الصورة التالية' : 'Photo suivante (Flèche Droite)'}
           >
-            <ChevronRight size={24} />
+            <ChevronRight size={24} className="rtl:rotate-180" />
           </button>
         )}
       </div>

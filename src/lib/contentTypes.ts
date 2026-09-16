@@ -33,15 +33,19 @@ export interface ExperienceItem {
 export interface PublicationItem {
   id: string;
   type: string;
+  typeAr?: string;
   icon: string;
   title: string;
   titleAr?: string;
   meta: string;
+  metaAr?: string;
   coverImage?: string;
   isbn?: string;
   price?: string;
   description?: string;
+  descriptionAr?: string;
   fullContent?: string;
+  fullContentAr?: string;
 }
 
 export interface ReservationItem {
@@ -62,6 +66,7 @@ export interface GalleryImage {
   id: string;
   src: string;
   alt: string;
+  altAr?: string;
   large?: boolean;
   category?: 'moscow' | 'court' | 'events' | string;
 }
@@ -69,6 +74,7 @@ export interface GalleryImage {
 export interface ClientItem {
   id: string;
   name: string;
+  nameAr?: string;
 }
 
 export interface SiteContent {
@@ -269,9 +275,9 @@ export const DEFAULT_CONTENT: SiteContent = {
   internationalIntroAr:
     "إشعاع وتدخلات المكتب في تونس وعلى الصعيد الدولي.",
   gallery: [
-    { id: 'g1', src: '/images/ramzi-portrait.jpg', alt: 'Maître Ramzi Lahmadi — Portrait officiel', category: 'court', large: true },
-    { id: 'g2', src: '/images/ramzi-about.jpg', alt: "Maître Ramzi Lahmadi — Cabinet d'avocat", category: 'court' },
-    { id: 'g3', src: '/images/ramzi-presentation.jpg', alt: 'Maître Ramzi Lahmadi — Conférence juridique', category: 'events' },
+    { id: 'g1', src: '/images/ramzi-portrait.jpg', alt: 'Maître Ramzi Lahmadi — Portrait officiel', altAr: 'الأستاذ رمزي الحمادي — صورة رسمية', category: 'court', large: true },
+    { id: 'g2', src: '/images/ramzi-about.jpg', alt: "Maître Ramzi Lahmadi — Cabinet d'avocat", altAr: 'الأستاذ رمزي الحمادي — مكتب المحاماة', category: 'court' },
+    { id: 'g3', src: '/images/ramzi-presentation.jpg', alt: 'Maître Ramzi Lahmadi — Conférence juridique', altAr: 'الأستاذ رمزي الحمادي — مؤتمر قانوني', category: 'events' },
   ],
 
   publicationsIntro: '',
@@ -280,10 +286,10 @@ export const DEFAULT_CONTENT: SiteContent = {
   reservations: [],
 
   clients: [
-    { id: 'c1', name: 'Entreprises & PME' },
-    { id: 'c2', name: 'Particuliers & Familles' },
-    { id: 'c3', name: 'Associations & ONG' },
-    { id: 'c4', name: 'Institutionnels & Collectivités' },
+    { id: 'c1', name: 'Entreprises & PME', nameAr: 'الشركات والمؤسسات الصغيرة والمتوسطة' },
+    { id: 'c2', name: 'Particuliers & Familles', nameAr: 'الأفراد والعائلات' },
+    { id: 'c3', name: 'Associations & ONG', nameAr: 'الجمعيات والمنظمات' },
+    { id: 'c4', name: 'Institutionnels & Collectivités', nameAr: 'المؤسسات والجماعات المحلية' },
   ],
 
   contactIntro:

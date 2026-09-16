@@ -76,6 +76,20 @@ export function ContentProvider({ children }: { children: ReactNode }) {
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     localStorage.setItem('ajmi-lang', lang);
+    // Localized SEO title + meta description
+    document.title =
+      lang === 'ar'
+        ? 'مكتب المحاماة الحمادي — الأستاذ رمزي الحمادي'
+        : "Cabinet d'Avocat Lahmadi — Maître Ramzi Lahmadi";
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) {
+      meta.setAttribute(
+        'content',
+        lang === 'ar'
+          ? 'مكتب المحاماة الحمادي — الأستاذ رمزي الحمادي، محام لدى التعقيب. قانون الشركات، القانون الجزائي الخاص، النزاعات والوساطة.'
+          : "Cabinet d'Avocat Lahmadi — Maître Ramzi Lahmadi, Avocat près la Cour de cassation. Droit des sociétés, droit pénal privé, contentieux & médiation."
+      );
+    }
   }, [lang]);
 
   // Initial load — read the SQLite database (creates it on first run).

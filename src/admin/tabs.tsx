@@ -67,6 +67,63 @@ export function GeneralTab() {
         />
       </Section>
 
+      <Section title="Identité du cabinet — version arabe" description="Miroir arabe des champs ci-dessus, affiché quand le visiteur bascule en AR.">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <Field label="Sigle / marque (arabe)">
+            <TextInput
+              dir="rtl" lang="ar"
+              value={content.brandNameAr || ''}
+              onChange={(e) => setContent((c) => ({ ...c, brandNameAr: e.target.value }))}
+            />
+          </Field>
+          <Field label="Sous-titre du sigle (arabe)">
+            <TextInput
+              dir="rtl" lang="ar"
+              value={content.brandTaglineAr || ''}
+              onChange={(e) => setContent((c) => ({ ...c, brandTaglineAr: e.target.value }))}
+            />
+          </Field>
+          <Field label="Prénom (arabe)">
+            <TextInput
+              dir="rtl" lang="ar"
+              value={content.heroFirstNameAr || ''}
+              onChange={(e) => setContent((c) => ({ ...c, heroFirstNameAr: e.target.value }))}
+            />
+          </Field>
+          <Field label="Nom (arabe)">
+            <TextInput
+              dir="rtl" lang="ar"
+              value={content.heroLastNameAr || ''}
+              onChange={(e) => setContent((c) => ({ ...c, heroLastNameAr: e.target.value }))}
+            />
+          </Field>
+        </div>
+        <Field label="Phrase d'accroche (arabe)">
+          <TextArea
+            dir="rtl" lang="ar"
+            rows={2}
+            value={content.heroSubtitleAr || ''}
+            onChange={(e) => setContent((c) => ({ ...c, heroSubtitleAr: e.target.value }))}
+          />
+        </Field>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <Field label="Bouton principal (arabe)">
+            <TextInput
+              dir="rtl" lang="ar"
+              value={content.ctaPrimaryAr || ''}
+              onChange={(e) => setContent((c) => ({ ...c, ctaPrimaryAr: e.target.value }))}
+            />
+          </Field>
+          <Field label="Bouton secondaire (arabe)">
+            <TextInput
+              dir="rtl" lang="ar"
+              value={content.ctaSecondaryAr || ''}
+              onChange={(e) => setContent((c) => ({ ...c, ctaSecondaryAr: e.target.value }))}
+            />
+          </Field>
+        </div>
+      </Section>
+
       <Section title="Coordonnées" description="Utilisées dans l'en-tête, le pied de page et la section contact.">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <Field label="Téléphone">
@@ -123,6 +180,47 @@ export function GeneralTab() {
           />
         </Field>
       </Section>
+
+      <Section title="Coordonnées & pied de page — version arabe">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <Field label="Adresse — ligne 1 (arabe)">
+            <TextInput
+              dir="rtl" lang="ar"
+              value={content.addressLine1Ar || ''}
+              onChange={(e) => setContent((c) => ({ ...c, addressLine1Ar: e.target.value }))}
+            />
+          </Field>
+          <Field label="Adresse — ligne 2 (arabe)">
+            <TextInput
+              dir="rtl" lang="ar"
+              value={content.addressLine2Ar || ''}
+              onChange={(e) => setContent((c) => ({ ...c, addressLine2Ar: e.target.value }))}
+            />
+          </Field>
+        </div>
+        <Field label="Libellé LinkedIn (arabe)">
+          <TextInput
+            dir="rtl" lang="ar"
+            value={content.linkedinLabelAr || ''}
+            onChange={(e) => setContent((c) => ({ ...c, linkedinLabelAr: e.target.value }))}
+          />
+        </Field>
+        <Field label="Texte d'introduction de la section contact (arabe)">
+          <TextArea
+            dir="rtl" lang="ar"
+            rows={3}
+            value={content.contactIntroAr || ''}
+            onChange={(e) => setContent((c) => ({ ...c, contactIntroAr: e.target.value }))}
+          />
+        </Field>
+        <Field label="Citation du pied de page (arabe)">
+          <TextInput
+            dir="rtl" lang="ar"
+            value={content.footerTaglineAr || ''}
+            onChange={(e) => setContent((c) => ({ ...c, footerTaglineAr: e.target.value }))}
+          />
+        </Field>
+      </Section>
     </div>
   );
 }
@@ -160,6 +258,29 @@ export function AboutTab() {
             <TextInput
               value={content.aboutTitleLine2}
               onChange={(e) => setContent((c) => ({ ...c, aboutTitleLine2: e.target.value }))}
+            />
+          </Field>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <Field label="Sur-titre (arabe)">
+            <TextInput
+              dir="rtl" lang="ar"
+              value={content.aboutEyebrowAr || ''}
+              onChange={(e) => setContent((c) => ({ ...c, aboutEyebrowAr: e.target.value }))}
+            />
+          </Field>
+          <Field label="Titre ligne 1 (arabe)">
+            <TextInput
+              dir="rtl" lang="ar"
+              value={content.aboutTitleLine1Ar || ''}
+              onChange={(e) => setContent((c) => ({ ...c, aboutTitleLine1Ar: e.target.value }))}
+            />
+          </Field>
+          <Field label="Titre ligne 2 (arabe)">
+            <TextInput
+              dir="rtl" lang="ar"
+              value={content.aboutTitleLine2Ar || ''}
+              onChange={(e) => setContent((c) => ({ ...c, aboutTitleLine2Ar: e.target.value }))}
             />
           </Field>
         </div>
@@ -202,6 +323,47 @@ export function AboutTab() {
             onChange={(e) => setContent((c) => ({ ...c, aboutQuote: e.target.value }))}
           />
         </Field>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <Field label="Phrase d'introduction (arabe)">
+            <TextArea
+              dir="rtl" lang="ar"
+              rows={2}
+              value={content.aboutLeadAr || ''}
+              onChange={(e) => setContent((c) => ({ ...c, aboutLeadAr: e.target.value }))}
+            />
+          </Field>
+          <Field label="Mot-clé mis en avant (arabe)">
+            <TextInput
+              dir="rtl" lang="ar"
+              value={content.aboutHighlightAr || ''}
+              onChange={(e) => setContent((c) => ({ ...c, aboutHighlightAr: e.target.value }))}
+            />
+          </Field>
+        </div>
+        <Field label="Paragraphe 1 (arabe)">
+          <TextArea
+            dir="rtl" lang="ar"
+            rows={4}
+            value={content.aboutParagraph1Ar || ''}
+            onChange={(e) => setContent((c) => ({ ...c, aboutParagraph1Ar: e.target.value }))}
+          />
+        </Field>
+        <Field label="Paragraphe 2 (arabe)">
+          <TextArea
+            dir="rtl" lang="ar"
+            rows={4}
+            value={content.aboutParagraph2Ar || ''}
+            onChange={(e) => setContent((c) => ({ ...c, aboutParagraph2Ar: e.target.value }))}
+          />
+        </Field>
+        <Field label="Citation affichée à côté de la photo (arabe)">
+          <TextArea
+            dir="rtl" lang="ar"
+            rows={2}
+            value={content.aboutQuoteAr || ''}
+            onChange={(e) => setContent((c) => ({ ...c, aboutQuoteAr: e.target.value }))}
+          />
+        </Field>
         <ImageField
           label="Photo d'illustration (conférence)"
           value={content.aboutPhoto}
@@ -224,6 +386,18 @@ export function AboutTab() {
                     value={v.desc}
                     onChange={(e) => updateValue(v.id, { desc: e.target.value })}
                     placeholder="Description courte"
+                  />
+                  <TextInput
+                    dir="rtl" lang="ar"
+                    value={v.labelAr || ''}
+                    onChange={(e) => updateValue(v.id, { labelAr: e.target.value })}
+                    placeholder="Libellé en arabe"
+                  />
+                  <TextInput
+                    dir="rtl" lang="ar"
+                    value={v.descAr || ''}
+                    onChange={(e) => updateValue(v.id, { descAr: e.target.value })}
+                    placeholder="Description courte en arabe"
                   />
                 </div>
                 <ListItemToolbar
@@ -274,6 +448,14 @@ export function PracticeTab() {
             onChange={(e) => setContent((c) => ({ ...c, practiceIntro: e.target.value }))}
           />
         </Field>
+        <Field label="Texte d'introduction (arabe)">
+          <TextArea
+            dir="rtl" lang="ar"
+            rows={2}
+            value={content.practiceIntroAr || ''}
+            onChange={(e) => setContent((c) => ({ ...c, practiceIntroAr: e.target.value }))}
+          />
+        </Field>
       </Section>
 
       <Section title="Domaines d'intervention" description="Chaque domaine est numéroté automatiquement selon son ordre.">
@@ -314,6 +496,19 @@ export function PracticeTab() {
                       value={p.description}
                       onChange={(e) => update(p.id, { description: e.target.value })}
                       placeholder="Description"
+                    />
+                    <TextInput
+                      dir="rtl" lang="ar"
+                      value={p.titleAr || ''}
+                      onChange={(e) => update(p.id, { titleAr: e.target.value })}
+                      placeholder="Titre du domaine en arabe"
+                    />
+                    <TextArea
+                      dir="rtl" lang="ar"
+                      rows={3}
+                      value={p.descriptionAr || ''}
+                      onChange={(e) => update(p.id, { descriptionAr: e.target.value })}
+                      placeholder="Description en arabe"
                     />
                   </div>
                 </div>
@@ -361,6 +556,14 @@ export function ExperienceTab() {
             onChange={(e) => setContent((c) => ({ ...c, experienceIntro: e.target.value }))}
           />
         </Field>
+        <Field label="Texte d'introduction (arabe)">
+          <TextArea
+            dir="rtl" lang="ar"
+            rows={2}
+            value={content.experienceIntroAr || ''}
+            onChange={(e) => setContent((c) => ({ ...c, experienceIntroAr: e.target.value }))}
+          />
+        </Field>
       </Section>
 
       <Section title="Expériences & engagements">
@@ -396,6 +599,27 @@ export function ExperienceTab() {
                 value={exp.detail}
                 onChange={(e) => update(exp.id, { detail: e.target.value })}
                 placeholder="Détail (optionnel)"
+              />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <TextInput
+                  dir="rtl" lang="ar"
+                  value={exp.titleAr || ''}
+                  onChange={(e) => update(exp.id, { titleAr: e.target.value })}
+                  placeholder="Titre / fonction en arabe"
+                />
+                <TextInput
+                  dir="rtl" lang="ar"
+                  value={exp.orgAr || ''}
+                  onChange={(e) => update(exp.id, { orgAr: e.target.value })}
+                  placeholder="Organisation en arabe"
+                />
+              </div>
+              <TextArea
+                dir="rtl" lang="ar"
+                rows={2}
+                value={exp.detailAr || ''}
+                onChange={(e) => update(exp.id, { detailAr: e.target.value })}
+                placeholder="Détail en arabe (optionnel)"
               />
             </div>
           ))}
@@ -437,6 +661,14 @@ export function GalleryTab() {
             onChange={(e) => setContent((c) => ({ ...c, internationalIntro: e.target.value }))}
           />
         </Field>
+        <Field label="Texte d'introduction (arabe)">
+          <TextArea
+            dir="rtl" lang="ar"
+            rows={2}
+            value={content.internationalIntroAr || ''}
+            onChange={(e) => setContent((c) => ({ ...c, internationalIntroAr: e.target.value }))}
+          />
+        </Field>
       </Section>
 
       <Section title="Galerie photo" description="Ajoutez, réordonnez ou supprimez les photos. Activez « Grande vignette » pour mettre une image en avant.">
@@ -459,6 +691,19 @@ export function GalleryTab() {
                 onChange={(e) => update(img.id, { alt: e.target.value })}
                 placeholder="Légende / texte alternatif"
               />
+              <TextInput
+                dir="rtl" lang="ar"
+                value={img.altAr || ''}
+                onChange={(e) => update(img.id, { altAr: e.target.value })}
+                placeholder="Légende en arabe"
+              />
+              <Field label="Catégorie (filtre de la galerie)">
+                <Select
+                  value={img.category || 'court'}
+                  onChange={(v) => update(img.id, { category: v })}
+                  options={['moscow', 'court', 'events']}
+                />
+              </Field>
               <label className="flex items-center gap-2 text-sm text-slate-600">
                 <input
                   type="checkbox"
@@ -509,6 +754,15 @@ export function PublicationsTab() {
             placeholder="Ouvrages, articles, prix et policy briefs portant la voix du cabinet..."
           />
         </Field>
+        <Field label="Texte d'introduction (arabe)">
+          <TextArea
+            dir="rtl" lang="ar"
+            rows={2}
+            value={content.publicationsIntroAr || ''}
+            onChange={(e) => setContent((c) => ({ ...c, publicationsIntroAr: e.target.value }))}
+            placeholder="مؤلفات، مقالات، جوائز ودراسات تحمل صوت المكتب..."
+          />
+        </Field>
       </Section>
 
       <Section title="Publications, prix & contributions" description="Gérez les ouvrages, articles, prix et études. Renseignez la couverture et le prix pour afficher le bouton de réservation.">
@@ -541,6 +795,14 @@ export function PublicationsTab() {
                       value={pub.type}
                       onChange={(e) => update(pub.id, { type: e.target.value })}
                       placeholder="Type"
+                    />
+                  </Field>
+                  <Field label="Type en arabe">
+                    <TextInput
+                      dir="rtl" lang="ar"
+                      value={pub.typeAr || ''}
+                      onChange={(e) => update(pub.id, { typeAr: e.target.value })}
+                      placeholder="النوع"
                     />
                   </Field>
 
@@ -590,6 +852,15 @@ export function PublicationsTab() {
                     />
                   </Field>
 
+                  <Field label="Référence / Éditeur / Année (arabe)">
+                    <TextInput
+                      dir="rtl" lang="ar"
+                      value={pub.metaAr || ''}
+                      onChange={(e) => update(pub.id, { metaAr: e.target.value })}
+                      placeholder="المرجع / الناشر / السنة"
+                    />
+                  </Field>
+
                   <Field label="Code ISBN (optionnel)">
                     <TextInput
                       value={pub.isbn || ''}
@@ -620,6 +891,16 @@ export function PublicationsTab() {
                     value={pub.fullContent || ''}
                     onChange={(e) => update(pub.id, { fullContent: e.target.value })}
                     placeholder="Texte intégral, extrait ou sommaire détaillé..."
+                  />
+                </Field>
+
+                <Field label="Contenu détaillé / Sommaire / Extrait (arabe)">
+                  <TextArea
+                    dir="rtl" lang="ar"
+                    rows={4}
+                    value={pub.fullContentAr || ''}
+                    onChange={(e) => update(pub.id, { fullContentAr: e.target.value })}
+                    placeholder="النص الكامل، مقتطف أو فهرس مفصل..."
                   />
                 </Field>
               </div>
@@ -837,6 +1118,13 @@ export function ClientsTab() {
               onChange={(e) => update(cl.id, { name: e.target.value })}
               className="flex-1"
               placeholder="Nom du client / partenaire"
+            />
+            <TextInput
+              dir="rtl" lang="ar"
+              value={cl.nameAr || ''}
+              onChange={(e) => update(cl.id, { nameAr: e.target.value })}
+              className="flex-1"
+              placeholder="اسم العميل / الشريك"
             />
             <ListItemToolbar
               canMoveUp={i > 0}
