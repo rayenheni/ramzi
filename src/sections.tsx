@@ -154,7 +154,7 @@ export function Hero() {
         <div className="hidden md:flex items-center gap-3 mt-20 animate-fade-in animation-delay-800">
           <div className="h-px w-16 bg-ink/20"></div>
           <span className="text-xs uppercase tracking-[0.25em] text-ink/50">
-            Défiler
+            {lang === 'ar' ? 'التمرير للأسفل' : 'Défiler'}
           </span>
         </div>
       </div>
@@ -205,8 +205,8 @@ export function About() {
             <div className="pt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
               {content.values.map((v) => (
                 <div key={v.id} className="border-t border-ink/15 pt-5">
-                  <div className="font-serif text-xl text-ink mb-2">{v.label}</div>
-                  <div className="text-sm text-ink/60 leading-relaxed">{v.desc}</div>
+                  <div className="font-serif text-xl text-ink mb-2">{lang === 'ar' && v.labelAr ? v.labelAr : v.label}</div>
+                  <div className="text-sm text-ink/60 leading-relaxed">{lang === 'ar' && v.descAr ? v.descAr : v.desc}</div>
                 </div>
               ))}
             </div>
@@ -222,7 +222,7 @@ export function About() {
                   className="w-full aspect-[16/10] object-cover border border-ink/15 shadow-md hover:border-gold/50 transition-all duration-300"
                 />
               </div>
-              <div className="sm:col-span-2 border-l-2 border-gold pl-5">
+              <div className="sm:col-span-2 border-s-2 border-gold ps-5">
                 <p className="font-serif italic text-lg text-ink leading-snug">
                   {(lang === 'ar' && content.aboutQuoteAr ? content.aboutQuoteAr : content.aboutQuote)}
                 </p>
@@ -301,8 +301,11 @@ export function TeamSection() {
         </div>
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
           <h2 className="font-display text-5xl md:text-7xl leading-none text-ink">
-            {lang === 'ar' ? 'المكتب و<br />' : 'Cabinet &<br />'}
-            <span className="italic font-serif font-light text-gold">{lang === 'ar' ? 'المحامون' : 'Avocats'}</span>
+            {lang === 'ar' ? (
+              <>المكتب و<br /><span className="italic font-serif font-light text-gold">المحامون</span></>
+            ) : (
+              <>Cabinet &<br /><span className="italic font-serif font-light text-gold">Avocats</span></>
+            )}
           </h2>
           <p className="max-w-md text-ink/70 leading-relaxed">
             {lang === 'ar' ? 'فريق يتكون من 3 محامين مؤهلين و4 كتاب قانونيين متفانين، لمتابعة دقيقة وشخصية لكل ملف.' : 'Une équipe de 3 avocats qualifiés et 4 secrétaires juridiques dédiés, pour un suivi rigoureux et personnalisé de chaque dossier.'}
@@ -392,12 +395,15 @@ export function Practice({ showHeader = false }: { showHeader?: boolean }) {
               <div className="flex items-center gap-3 mb-6">
                 <div className="h-px w-10 bg-gold"></div>
                 <span className="text-xs uppercase tracking-[0.3em] text-ink/60 font-medium">
-                  {lang === 'ar' ? 'مجالات' : 'Domaines'} d'intervention
+                  {lang === 'ar' ? 'مجالات التدخل' : "Domaines d'intervention"}
                 </span>
               </div>
               <h2 className="font-display text-5xl md:text-7xl leading-none text-ink">
-                Expertises<br />
-                <span className="italic font-serif font-light text-gold">& pratique</span>
+                {lang === 'ar' ? (
+                  <>الخبرات<br /><span className="italic font-serif font-light text-gold">& الممارسة</span></>
+                ) : (
+                  <>Expertises<br /><span className="italic font-serif font-light text-gold">& pratique</span></>
+                )}
               </h2>
             </div>
             <p className="max-w-md text-ink/70 leading-relaxed">
@@ -426,12 +432,12 @@ export function Practice({ showHeader = false }: { showHeader?: boolean }) {
                 </div>
                 <div className="col-span-12 md:col-span-5">
                   <h3 className="font-display text-2xl md:text-3xl lg:text-4xl text-ink leading-tight group-hover:text-gold transition-colors duration-500">
-                    {area.title}
+                    {(lang === 'ar' && area.titleAr ? area.titleAr : area.title)}
                   </h3>
                 </div>
                 <div className="col-span-12 md:col-span-5">
                   <p className="text-ink/70 leading-relaxed text-base">
-                    {area.description}
+                    {(lang === 'ar' && area.descriptionAr ? area.descriptionAr : area.description)}
                   </p>
                 </div>
               </div>
@@ -462,18 +468,22 @@ export function PracticeTeaser() {
             <div className="flex items-center gap-3 mb-6">
               <div className="h-px w-10 bg-gold"></div>
               <span className="text-xs uppercase tracking-[0.3em] text-ink/60 font-medium">
-                {lang === 'ar' ? 'مجالات' : 'Domaines'} d'intervention
+                {lang === 'ar' ? 'مجالات التدخل' : "Domaines d'intervention"}
               </span>
             </div>
             <h2 className="font-display text-4xl md:text-6xl leading-none text-ink">
-              Nos <span className="italic font-serif font-light text-gold">expertises</span>
+              {lang === 'ar' ? (
+                <>خبراتنا <span className="italic font-serif font-light text-gold">المتخصصة</span></>
+              ) : (
+                <>Nos <span className="italic font-serif font-light text-gold">expertises</span></>
+              )}
             </h2>
           </div>
           <a
             href="#/expertises"
             className="inline-flex items-center gap-2 text-sm font-medium text-ink hover:text-gold transition-colors group shrink-0"
           >
-            Voir tous les domaines
+            {lang === 'ar' ? 'عرض جميع المجالات' : 'Voir tous les domaines'}
             <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </a>
         </div>
@@ -491,7 +501,7 @@ export function PracticeTeaser() {
                   <Icon size={18} className="text-ink group-hover:text-paper transition-colors duration-500" />
                 </div>
                 <h3 className="font-serif text-xl text-ink leading-snug group-hover:text-gold transition-colors duration-500">
-                  {area.title}
+                  {(lang === 'ar' && area.titleAr ? area.titleAr : area.title)}
                 </h3>
               </a>
             );
@@ -525,14 +535,17 @@ export function Experience({ showHeader = false }: { showHeader?: boolean }) {
               <div className="flex items-center gap-3 mb-6">
                 <div className="h-px w-10 bg-gold"></div>
                 <span className="text-xs uppercase tracking-[0.3em] text-paper/60 font-medium">
-                  {showHeader ? 'Parcours' : 'Chronologie'}
+                  {showHeader ? (lang === 'ar' ? 'المسار' : 'Parcours') : (lang === 'ar' ? 'التسلسل الزمني' : 'Chronologie')}
                 </span>
               </div>
               {showHeader ? (
                 <>
                   <h2 className="font-display text-5xl md:text-6xl leading-none">
-                    Expériences<br />
-                    <span className="italic font-serif font-light text-gold">& engagements</span>
+                    {lang === 'ar' ? (
+                      <>الخبرات<br /><span className="italic font-serif font-light text-gold">& الالتزامات</span></>
+                    ) : (
+                      <>Expériences<br /><span className="italic font-serif font-light text-gold">& engagements</span></>
+                    )}
                   </h2>
                   <p className="mt-8 text-paper/70 leading-relaxed">
                     {(lang === 'ar' && content.experienceIntroAr ? content.experienceIntroAr : content.experienceIntro)}
@@ -540,17 +553,17 @@ export function Experience({ showHeader = false }: { showHeader?: boolean }) {
                 </>
               ) : (
                 <p className="text-paper/50 font-serif italic text-lg">
-                  {content.experiences.length} étapes clés du parcours professionnel.
+                  {lang === 'ar' ? `${content.experiences.length} مراحل رئيسية في المسار المهني.` : `${content.experiences.length} étapes clés du parcours professionnel.`}
                 </p>
               )}
             </div>
           </div>
 
           <div className="lg:col-span-8">
-            <div className="space-y-0 border-l border-paper/15 pl-8 md:pl-12">
+            <div className="space-y-0 border-s border-paper/15 ps-8 md:ps-12">
               {content.experiences.map((exp, i) => (
                 <div key={exp.id} className="relative pb-10 md:pb-14">
-                  <div className="absolute -left-[41px] md:-left-[49px] top-2 w-3 h-3 bg-gold"></div>
+                  <div className="absolute -start-[41px] md:-start-[49px] top-2 w-3 h-3 bg-gold"></div>
                   <div className="mb-1 text-gold font-serif text-sm">
                     {String(i + 1).padStart(2, '0')}
                   </div>
@@ -598,8 +611,11 @@ export function MediationSection() {
               </span>
             </div>
             <h2 className="font-display text-4xl md:text-6xl leading-tight text-ink">
-              {lang === 'ar' ? 'الوساطة و<br />' : 'Médiation &<br />'}
-              <span className="italic font-serif font-light text-gold">{lang === 'ar' ? 'التسوية الودية' : 'règlement amiable'}</span>
+              {lang === 'ar' ? (
+                <>الوساطة و<br /><span className="italic font-serif font-light text-gold">التسوية الودية</span></>
+              ) : (
+                <>Médiation &<br /><span className="italic font-serif font-light text-gold">règlement amiable</span></>
+              )}
             </h2>
             <p className="text-lg text-ink/80 leading-relaxed font-light">
               {lang === 'ar' ? 'يفضل المكتب، كلما أمكن ذلك، البحث عن حلول تفاوضية وصلحية. تتيح الوساطة حل النزاعات بطريقة سريعة وسرية واقتصادية مع الحفاظ على العلاقات المهنية والتجارية.' : 'Le cabinet privilégie, chaque fois que possible, la recherche de solutions négociées et transactionnelles. La médiation permet de résoudre les litiges de manière rapide, confidentielle et économique tout en préservant les relations professionnelles et commerciales.'}
@@ -622,7 +638,7 @@ export function MediationSection() {
               </div>
               <h3 className="font-serif text-2xl text-ink">{lang === 'ar' ? 'مفاوضات الأعمال' : 'Négociation des Affaires'}</h3>
               <p className="text-sm text-ink/70 leading-relaxed">
-                Règlement amiable des conflits d'associés, litiges commerciaux inter-entreprises et négociations contractuelles.
+                {lang === 'ar' ? 'التسوية الودية للنزاعات بين الشركاء، النزاعات التجارية والتفاوض على العقود.' : "Règlement amiable des conflits d'associés, litiges commerciaux inter-entreprises et négociations contractuelles."}
               </p>
             </div>
 
@@ -630,9 +646,9 @@ export function MediationSection() {
               <div className="w-12 h-12 bg-ink/5 border border-ink/10 flex items-center justify-center text-gold mb-4">
                 <Layers size={24} />
               </div>
-              <h3 className="font-serif text-2xl text-ink">Protocoles d'Accord</h3>
+              <h3 className="font-serif text-2xl text-ink">{lang === 'ar' ? 'بروتوكولات الصلح' : "Protocoles d'Accord"}</h3>
               <p className="text-sm text-ink/70 leading-relaxed">
-                Rédaction et homologation d'accords transactionnels ayant force exécutoire devant les juridictions.
+                {lang === 'ar' ? 'صياغة واعتماد اتفاقيات صلح ذات قوة تنفيذية أمام المحاكم.' : "Rédaction et homologation d'accords transactionnels ayant force exécutoire devant les juridictions."}
               </p>
             </div>
 
@@ -640,9 +656,9 @@ export function MediationSection() {
               <div className="w-12 h-12 bg-ink/5 border border-ink/10 flex items-center justify-center text-gold mb-4">
                 <Globe2 size={24} />
               </div>
-              <h3 className="font-serif text-2xl text-ink">Confidentialité Absolue</h3>
+              <h3 className="font-serif text-2xl text-ink">{lang === 'ar' ? 'سرية مطلقة' : 'Confidentialité Absolue'}</h3>
               <p className="text-sm text-ink/70 leading-relaxed">
-                Procédure strictement confidentielle protégeant la réputation, les secrets d'affaires et l'image des parties.
+                {lang === 'ar' ? 'إجراءات سرية تماماً تحمي السمعة والأسرار التجارية وصورة الأطراف.' : "Procédure strictement confidentielle protégeant la réputation, les secrets d'affaires et l'image des parties."}
               </p>
             </div>
 
@@ -650,9 +666,9 @@ export function MediationSection() {
               <div className="w-12 h-12 bg-ink/5 border border-ink/10 flex items-center justify-center text-gold mb-4">
                 <Phone size={24} />
               </div>
-              <h3 className="font-serif text-2xl text-ink">Accompagnement Sur-Mesure</h3>
+              <h3 className="font-serif text-2xl text-ink">{lang === 'ar' ? 'مرافقة حسب الطلب' : 'Accompagnement Sur-Mesure'}</h3>
               <p className="text-sm text-ink/70 leading-relaxed">
-                Conseil stratégique réactif par Maître Ramzi Lahmadi et son équipe dédiée.
+                {lang === 'ar' ? 'استشارة استراتيجية متجاوبة من الأستاذ رمزي الحمادي وفريقه المتخصص.' : 'Conseil stratégique réactif par Maître Ramzi Lahmadi et son équipe dédiée.'}
               </p>
             </div>
           </div>
@@ -702,18 +718,21 @@ export function International() {
             <div className="flex items-center gap-3 mb-6">
               <div className="h-px w-10 bg-gold"></div>
               <span className="text-xs uppercase tracking-[0.3em] text-ink/60 font-medium">
-                Rayonnement & Interventions
+                {lang === 'ar' ? 'الإشعاع والتدخلات' : 'Rayonnement & Interventions'}
               </span>
             </div>
             <h2 className="font-display text-5xl md:text-7xl leading-none text-ink">
-              Galerie<br />
-              <span className="italic font-serif font-light text-gold">& Réalisations</span>
+              {lang === 'ar' ? (
+                <>معرض الصور<br /><span className="italic font-serif font-light text-gold">& الإنجازات</span></>
+              ) : (
+                <>Galerie<br /><span className="italic font-serif font-light text-gold">& Réalisations</span></>
+              )}
             </h2>
           </div>
           <div className="max-w-md flex items-start gap-3">
             <Globe2 size={22} className="text-gold shrink-0 mt-1" />
             <p className="text-ink/70 leading-relaxed">
-              {content.internationalIntro}
+              {(lang === 'ar' && content.internationalIntroAr ? content.internationalIntroAr : content.internationalIntro)}
             </p>
           </div>
         </div>
@@ -722,7 +741,7 @@ export function International() {
         <div className="flex flex-wrap items-center gap-3 mb-10 pb-4 border-b border-ink/10">
           <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-ink/40 mr-4 hidden sm:flex">
             <Layers size={14} />
-            Catégories:
+            {lang === 'ar' ? 'الفئات:' : 'Catégories:'}
           </div>
           {categories.map((cat) => (
             <button
@@ -759,7 +778,7 @@ export function International() {
               <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
                 <div className="transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300 space-y-1">
                   <div className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-gold font-semibold">
-                    <Maximize2 size={12} /> Cliquer pour agrandir
+                    <Maximize2 size={12} /> {lang === 'ar' ? 'انقر التكبير' : 'Cliquer pour agrandir'}
                   </div>
                   <p className="font-serif text-sm text-paper leading-snug line-clamp-2">
                     {img.alt}
@@ -985,11 +1004,15 @@ export function Clients() {
         <div className="flex items-center gap-3 mb-4">
           <div className="h-px w-10 bg-gold"></div>
           <span className="text-xs uppercase tracking-[0.3em] text-ink/60 font-medium">
-            Ils nous font confiance
+            {lang === 'ar' ? 'ثقتهم بنا' : 'Ils nous font confiance'}
           </span>
         </div>
         <h2 className="font-display text-3xl md:text-5xl leading-none text-ink">
-          Nos clients &<span className="italic font-serif font-light text-gold"> partenaires</span>
+          {lang === 'ar' ? (
+            <>عملاؤنا و<span className="italic font-serif font-light text-gold">شركاؤنا</span></>
+          ) : (
+            <>Nos clients &<span className="italic font-serif font-light text-gold"> partenaires</span></>
+          )}
         </h2>
       </div>
 
@@ -1031,13 +1054,16 @@ export function Contact({ showHeader = false }: { showHeader?: boolean }) {
             <div className="flex items-center gap-3 mb-6">
               <div className="h-px w-10 bg-gold"></div>
               <span className="text-xs uppercase tracking-[0.3em] text-ink/60 font-medium">
-                Contact
+                {lang === 'ar' ? 'اتصل بنا' : 'Contact'}
               </span>
             </div>
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
               <h2 className="font-display text-5xl md:text-7xl leading-[0.95] text-ink">
-                Parlons de<br />
-                <span className="italic font-serif font-light text-gold">votre dossier</span>
+                {lang === 'ar' ? (
+                  <>لنناقش<br /><span className="italic font-serif font-light text-gold">ملفكم</span></>
+                ) : (
+                  <>Parlons de<br /><span className="italic font-serif font-light text-gold">votre dossier</span></>
+                )}
               </h2>
               <p className="max-w-md text-ink/70 leading-relaxed">
                 {(lang === 'ar' && content.contactIntroAr ? content.contactIntroAr : content.contactIntro)}
@@ -1054,7 +1080,7 @@ export function Contact({ showHeader = false }: { showHeader?: boolean }) {
               >
                 <div className="flex items-center gap-3 mb-3">
                   <Phone size={18} className="text-gold" />
-                  <span className="text-xs uppercase tracking-[0.2em] text-ink/60">Téléphone</span>
+                  <span className="text-xs uppercase tracking-[0.2em] text-ink/60">{lang === 'ar' ? 'الهاتف' : 'Téléphone'}</span>
                 </div>
                 <div className="font-display text-2xl text-ink group-hover:text-gold transition-colors">
                   {(lang === 'ar' && content.phoneAr ? content.phoneAr : content.phone)}
@@ -1067,7 +1093,7 @@ export function Contact({ showHeader = false }: { showHeader?: boolean }) {
               >
                 <div className="flex items-center gap-3 mb-3">
                   <Mail size={18} className="text-gold" />
-                  <span className="text-xs uppercase tracking-[0.2em] text-ink/60">Email</span>
+                  <span className="text-xs uppercase tracking-[0.2em] text-ink/60">{lang === 'ar' ? 'البريد الإلكتروني' : 'Email'}</span>
                 </div>
                 <div className="font-serif text-lg text-ink group-hover:text-gold transition-colors break-all">
                   {(lang === 'ar' && content.emailAr ? content.emailAr : content.email)}
@@ -1077,11 +1103,11 @@ export function Contact({ showHeader = false }: { showHeader?: boolean }) {
               <div className="group block border border-ink/15 p-6 md:col-span-2">
                 <div className="flex items-center gap-3 mb-3">
                   <MapPin size={18} className="text-gold" />
-                  <span className="text-xs uppercase tracking-[0.2em] text-ink/60">Adresse</span>
+                  <span className="text-xs uppercase tracking-[0.2em] text-ink/60">{lang === 'ar' ? 'العنوان' : 'Adresse'}</span>
                 </div>
                 <div className="font-display text-xl md:text-2xl text-ink leading-snug">
                   {(lang === 'ar' && content.addressLine1Ar ? content.addressLine1Ar : content.addressLine1)}<br />
-                  {(lang === 'ar' && content.addressLine2Ar ? content.addressLine2Ar : content.addressLine2)}, Tunisie
+                  {(lang === 'ar' && content.addressLine2Ar ? content.addressLine2Ar : content.addressLine2)}, {lang === 'ar' ? 'تونس' : 'Tunisie'}
                 </div>
               </div>
 
@@ -1093,7 +1119,7 @@ export function Contact({ showHeader = false }: { showHeader?: boolean }) {
               >
                 <div className="flex items-center gap-3 mb-3">
                   <Linkedin size={18} className="text-gold" />
-                  <span className="text-xs uppercase tracking-[0.2em] text-ink/60">LinkedIn</span>
+                  <span className="text-xs uppercase tracking-[0.2em] text-ink/60">{lang === 'ar' ? 'لينكد إن' : 'LinkedIn'}</span>
                 </div>
                 <div className="font-serif text-lg text-ink group-hover:text-gold transition-colors flex items-center justify-between">
                   {(lang === 'ar' && content.heroFirstNameAr ? content.heroFirstNameAr : content.heroFirstName)} {(lang === 'ar' && content.heroLastNameAr ? content.heroLastNameAr : content.heroLastName)}
@@ -1107,29 +1133,33 @@ export function Contact({ showHeader = false }: { showHeader?: boolean }) {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                alert('Merci ! Votre message a bien été envoyé. Le cabinet vous contactera dans les plus brefs délais.');
+                alert(
+                  lang === 'ar'
+                    ? 'شكراً لكم! تم إرسال رسالتكم بنجاح. سيتصل بكم المكتب في أقرب وقت.'
+                    : 'Merci ! Votre message a bien été envoyé. Le cabinet vous contactera dans les plus brefs délais.'
+                );
               }}
               className="bg-ink text-paper p-8 md:p-10 space-y-6"
             >
               <div>
                 <div className="text-xs uppercase tracking-[0.25em] text-gold font-semibold mb-2">
-                  Demande de consultation
+                  {lang === 'ar' ? 'طلب استشارة' : 'Demande de consultation'}
                 </div>
                 <h3 className="font-display text-3xl leading-tight">
-                  Écrivez-nous
+                  {lang === 'ar' ? 'راسلنا' : 'Écrivez-nous'}
                 </h3>
               </div>
 
               <div className="space-y-4">
                 <div>
                   <label className="text-xs uppercase tracking-[0.15em] text-paper/60 mb-2 block">
-                    Nom complet
+                    {lang === 'ar' ? 'الاسم الكامل' : 'Nom complet'}
                   </label>
                   <input
                     type="text"
                     required
                     className="w-full bg-transparent border-b border-paper/20 py-2 focus:border-gold outline-none transition-colors text-paper placeholder-paper/30"
-                    placeholder="Votre nom"
+                    placeholder={lang === 'ar' ? 'اسمكم الكامل' : 'Votre nom'}
                   />
                 </div>
                 <div>
@@ -1155,13 +1185,13 @@ export function Contact({ showHeader = false }: { showHeader?: boolean }) {
                 </div>
                 <div>
                   <label className="text-xs uppercase tracking-[0.15em] text-paper/60 mb-2 block">
-                    Votre message
+                    {lang === 'ar' ? 'رسالتكم' : 'Votre message'}
                   </label>
                   <textarea
                     required
                     rows={4}
                     className="w-full bg-transparent border-b border-paper/20 py-2 focus:border-gold outline-none transition-colors text-paper placeholder-paper/30 resize-none"
-                    placeholder="Décrivez brièvement votre situation..."
+                    placeholder={lang === 'ar' ? 'صف باختصار وضعيتكم...' : 'Décrivez brièvement votre situation...'}
                   />
                 </div>
               </div>
@@ -1170,13 +1200,12 @@ export function Contact({ showHeader = false }: { showHeader?: boolean }) {
                 type="submit"
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-gold text-white font-medium hover:bg-gold-light transition-colors duration-300 group"
               >
-                Envoyer la demande
+                {lang === 'ar' ? 'إرسال الطلب' : 'Envoyer la demande'}
                 <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </button>
 
               <p className="text-xs text-paper/50 leading-relaxed">
-                Les informations transmises sont strictement confidentielles et
-                soumises au secret professionnel de l'avocat.
+                {lang === 'ar' ? 'المعلومات المرسلة سرية للغاية وتخضع للسر المهني للمحامي.' : "Les informations transmises sont strictement confidentielles et soumises au secret professionnel de l'avocat."}
               </p>
             </form>
           </div>
