@@ -259,25 +259,27 @@ export function TeamSection() {
   const team = [
     {
       id: 'lead',
-      name: `Maître ${(lang === 'ar' && content.heroFirstNameAr ? content.heroFirstNameAr : content.heroFirstName)} ${(lang === 'ar' && content.heroLastNameAr ? content.heroLastNameAr : content.heroLastName)}`,
-      role: content.brandTagline,
-      detail: "20+ ans {lang === 'ar' ? 'خبرة' : "d'expérience"} · CAPA 2005 · Master + DEA en Droit Privé",
+      name: lang === 'ar' 
+        ? `الأستاذ ${content.heroFirstNameAr || content.heroFirstName} ${content.heroLastNameAr || content.heroLastName}`
+        : `Maître ${content.heroFirstName} ${content.heroLastName}`,
+      role: lang === 'ar' && content.brandTaglineAr ? content.brandTaglineAr : content.brandTagline,
+      detail: lang === 'ar' ? '20+ سنة خبرة · شهادة الكفاءة 2005 · ماجستير ودراسات معمقة' : "20+ ans d'expérience · CAPA 2005 · Master + DEA en Droit Privé",
       photo: content.heroPortrait,
       isLead: true,
     },
     {
       id: 'assistant1',
-      name: '{lang === 'ar' ? 'محام مساعد' : 'Avocat Assistant'}',
-      role: '{lang === 'ar' ? 'محام متعاون' : 'Avocat Collaborateur'}',
-      detail: '{lang === 'ar' ? 'قانون الشركات والنزاعات المدنية' : 'Droit des sociétés & contentieux civil'}',
+      name: lang === 'ar' ? 'محام مساعد 1' : 'Avocat Assistant 1',
+      role: lang === 'ar' ? 'محام متعاون' : 'Avocat Collaborateur',
+      detail: lang === 'ar' ? 'قانون الشركات والنزاعات المدنية' : 'Droit des sociétés & contentieux civil',
       photo: '/images/avocat-assistant-1.jpg',
       isLead: false,
     },
     {
       id: 'assistant2',
-      name: '{lang === 'ar' ? 'محامية مساعدة' : 'Avocate Assistante'}',
-      role: '{lang === 'ar' ? 'محامية متعاونة' : 'Avocate Collaboratrice'}',
-      detail: '{lang === 'ar' ? 'قانون الأسرة والوساطة' : 'Droit de la famille & médiation'}',
+      name: lang === 'ar' ? 'محامية مساعدة 2' : 'Avocate Assistante 2',
+      role: lang === 'ar' ? 'محامية متعاونة' : 'Avocate Collaboratrice',
+      detail: lang === 'ar' ? 'قانون الأسرة والوساطة' : 'Droit de la famille & médiation',
       photo: '/images/avocat-assistant-2.jpg',
       isLead: false,
     },

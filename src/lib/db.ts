@@ -141,17 +141,17 @@ function writeContent(db: Database, content: SiteContent) {
 
     db.run('DELETE FROM values_list;');
     content.values.forEach((v, i) => {
-      db.run('INSERT INTO values_list (id, label, labelAr, description, descriptionAr, position) VALUES (?, ?, ?, ?, ?, ?);', [v.id, v.label, v.labelAr ?? '', v.desc, v.descAr ?? '', i]', [v.id, v.label, v.desc, i]);
+      db.run('INSERT INTO values_list (id, label, labelAr, description, descriptionAr, position) VALUES (?, ?, ?, ?, ?, ?);', [v.id, v.label, v.labelAr ?? '', v.desc, v.descAr ?? '', i]);
     });
 
     db.run('DELETE FROM practice_areas;');
     content.practiceAreas.forEach((p, i) => {
-      db.run('INSERT INTO practice_areas (id, icon, title, titleAr, description, descriptionAr, position) VALUES (?, ?, ?, ?, ?, ?, ?);', [p.id, p.icon, p.title, p.titleAr ?? '', p.description, p.descriptionAr ?? '', i]', [p.id, p.icon, p.title, p.description, i]);
+      db.run('INSERT INTO practice_areas (id, icon, title, titleAr, description, descriptionAr, position) VALUES (?, ?, ?, ?, ?, ?, ?);', [p.id, p.icon, p.title, p.titleAr ?? '', p.description, p.descriptionAr ?? '', i]);
     });
 
     db.run('DELETE FROM experiences;');
     content.experiences.forEach((e, i) => {
-      db.run('INSERT INTO experiences (id, title, titleAr, org, orgAr, detail, detailAr, position) VALUES (?, ?, ?, ?, ?, ?, ?, ?);', [e.id, e.title, e.titleAr ?? '', e.org, e.orgAr ?? '', e.detail, e.detailAr ?? '', i]', [e.id, e.title, e.org, e.detail, i]);
+      db.run('INSERT INTO experiences (id, title, titleAr, org, orgAr, detail, detailAr, position) VALUES (?, ?, ?, ?, ?, ?, ?, ?);', [e.id, e.title, e.titleAr ?? '', e.org, e.orgAr ?? '', e.detail, e.detailAr ?? '', i]);
     });
 
     db.run('DELETE FROM gallery;');

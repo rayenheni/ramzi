@@ -3,7 +3,7 @@ import { ArrowUpRight, Menu, X, Globe } from 'lucide-react';
 import { useContent } from '../lib/content';
 import { getIcon } from '../lib/icons';
 
-const PAGES = {
+export const PAGES = {
   fr: [
     { label: 'Accueil', path: '#/' },
     { label: 'Cabinet', path: '#/cabinet' },

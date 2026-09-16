@@ -156,11 +156,9 @@ export const DEFAULT_CONTENT: SiteContent = {
   heroLastName: 'Lahmadi',
   heroLastNameAr: 'الحمادي',
   heroSubtitle:
-    "Avocat près la Cour de cassation · +20 ans d’expérience
-Droit des sociétés · Droit pénal privé · Contentieux & Médiation",
+    "Avocat près la Cour de cassation · +20 ans d’expérience\nDroit des sociétés · Droit pénal privé · Contentieux & Médiation",
   heroSubtitleAr:
-    "محام لدى التعقيب · أكثر من 20 سنة خبرة
-قانون الشركات · القانون الجزائي الخاص · النزاعات والوساطة",
+    "محام لدى التعقيب · أكثر من 20 سنة خبرة\nقانون الشركات · القانون الجزائي الخاص · النزاعات والوساطة",
   heroPortrait: '/images/ramzi-portrait.jpg',
   ctaPrimary: 'Prendre rendez-vous',
   ctaPrimaryAr: 'حجز موعد',
